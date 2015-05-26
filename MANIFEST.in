@@ -1,0 +1,2 @@
+recursive-include src/abbrev_test *.bam *.bai *.bed *.stat
+include src/models/*.pkl

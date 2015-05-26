@@ -1,0 +1,9 @@
+track name="GM12878 deletions, observations, coverage, hic linksA, linksB, wgs linksA, linksB"
+chr20	1337176	1338798	valid(het)	low-cov	no(1)	yes(1-2del,2)	no(15)	yes(20del,1)
+chr20	1505452	1541490	valid(het)(1-link)	low-cov	yes(30)	yes(1del,3)	no	no
+chr20	30989149	30993049 valid(het) 	low-cov	no	yes(1)	no	no
+chr20	35166578	35167640	invalid	uniform-cov	yes(10)	yes(10)	no	no	
+chr20	41705581	41707310	invalid	uniform-cov	yes(1)	yes(3)	no	no
+chr20	41914857	41917438	valid(het)(1link)	low-cov	yes(2del)	yes(1)	yes(1del,30)	yes(30)
+chr20	52080513	52091401	valid(het)	low-cov	yes(8)	yes(30)	no	no
+chr20	7552997	7555560	invalid	hi-cov	yes(15)	yes(15)	no	no

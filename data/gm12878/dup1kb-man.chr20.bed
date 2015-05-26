@@ -1,0 +1,6 @@
+track name="GM12878 duplications, observations, coverage, hic linksA, linksB, wgs linksA, linksB"
+chr20	1500338	1544222	cgr	uniform-cov	yes(40cov-peak)	yes(10cov-peak)	yes(15cov-peak)	yes(10cov-peak)
+chr20	1504955	1509014	cgr	uniform-cov	-	-	-	-
+chr20	28033715	28124670	centromere	high-variance	-	-	-	-
+chr20	46533765	46536895	invalid	uniform-cov	yes(1evert,avgcov-peak)	yes(avgcov-peak)	yes(avgcov-peak)	yes(avgcov-peak)
+chr20	51908207	51917753	snp-generates-hind3	high-cov	yes(1evert,lowcov-1peak)	yes(high-evert,300cov-1peak)	yes(highcov)	yes(highcov)

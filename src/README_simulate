@@ -1,0 +1,94 @@
+chr20.all.bam is the bam file that contains HiC data from our lab. 
+chr20_step2_inference is the haplotype predictions
+
+NA12878.chr20.hiseq.wgs.bwa.recal.bam is the genome sequencing data (from Depristo et al). The data is aligned to hg18 and is downloaded from ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/working/20101201_cg_NA12878/ and chr20 alone was extracted out.
+
+====================
+Simulation ReadMe
+
+svpaths are located in simulations;
+  totals are split into A,B
+
+Read simulations are complicated.
+WGS chr20 had 45835130 mapped + 695564 unmapped reads
+HiC chr20 had  8739546 mapped
+
+Each svpath (sim.chr20.<sim num>.bed)  implicates two haploid chromosomes A,B (a partitioning of deletions from svpath)
+  - generate reads from each haploid chromsomes
+     - sim.wgs (sim.chr20.<sim num>.<allele>.wgs.dat  
+     - hic (sim.del-chr20_<sim num %03d>.<allele>.dat
+  - convert reads from each haploid chromosome to ref position
+     - sim.wgs (sim.chr20.<sim num>.<allele>.wgs.ref.dat)
+     - hic (sim.del-chr20_<sim num %03d>.<allele>.ref.dat)
+  - downsample reads to match real datasets (special for homozygous case)
+     - sim.wgs (sim.chr20.<sim num>.<allele>.wgs.ref.<sampling>.dat
+     - hic (sim.del-chr20_<sim num %03d>.<allele>.ref.<sampling>.dat
+  - filter reads for only overlapping with chr20_step2_inference 
+     - sim.wgs (sim.chr20.<sim num>.<allele>.wgs.ref.<sampling>.filt.dat
+     - hic (sim.del-chr20_<sim num %03d>.<allele>.ref.<sampling>.filt.dat
+
+Training Dataset:
+Realistic Classes pA,pB,inc
+  - p<allele> 
+     sim.chr20.<sim num>.<allele>.bed 
+     sim.chr20.<sim num>.wgs.ref.down4.dat
+     sim.chr20.<sim num>.A.wgs.ref.down4.filt.dat
+     sim.chr20.<sim num>.B.wgs.ref.down4.filt.dat
+     sim.del-chr20.<sim num %03d>.A.ref.down2.filt.dat
+     sim.del-chr20.<sim num %03d>.B.ref.down2.filt.dat
+  - inc     
+     sim.chr20.<sim num>.<allele>.bed 
+     sim.chr20.<inc sim num>.wgs.ref.down4.dat
+     sim.chr20.<inc sim num>.A.wgs.ref.down4.filt.dat
+     sim.chr20.<inc sim num>.B.wgs.ref.down4.filt.dat
+     sim.del-chr20.<inc sim num %03d>.A.ref.down2.filt.dat
+     sim.del-chr20.<inc sim num %03d>.B.ref.down2.filt.dat
+Realistic Classes p,inc
+  - p
+    combine tables for pA and pB
+Realistic Classes pA,pB,homA,homB,inc
+  - hom<allele>
+     sim.chr20.<sim num>.<allele>.bed 
+     sim.chr20.<sim num>.<allele>.wgs.ref.down2.dat
+     sim.chr20.<sim num>.<allele>1.wgs.ref.down2.filt.dat
+     sim.chr20.<sim num>.<allele>2.wgs.ref.down2.filt.dat
+     sim.del-chr20.<sim num %03d>.<allele>1.ref.filt.dat
+     sim.del-chr20.<sim num %03d>.<allele>2.ref.filt.dat
+
+22997350 sim.chr20.0.A1.wgs.ref.down2.dat
+23009560 sim.chr20.0.A2.wgs.ref.down2.dat
+92000000 sim.chr20.0.A.wgs.dat
+91999690 sim.chr20.0.A.wgs.ref.dat
+46006910 sim.chr20.0.A.wgs.ref.down2.dat
+ 5185684 sim.chr20.0.A.wgs.ref.down2.filt.dat
+23000544 sim.chr20.0.A.wgs.ref.down4.dat
+ 2593326 sim.chr20.0.A.wgs.ref.down4.filt.dat
+22997348 sim.chr20.0.B1.wgs.ref.down2.dat
+23009558 sim.chr20.0.B2.wgs.ref.down2.dat
+92000000 sim.chr20.0.B.wgs.dat
+91999678 sim.chr20.0.B.wgs.ref.dat
+46006906 sim.chr20.0.B.wgs.ref.down2.dat
+ 5190762 sim.chr20.0.B.wgs.ref.down2.filt.dat
+23000542 sim.chr20.0.B.wgs.ref.down4.dat
+ 2597614 sim.chr20.0.B.wgs.ref.down4.filt.dat
+92013816 sim.chr20.0.wgs.ref.down2.dat
+46001086 sim.chr20.0.wgs.ref.down4.dat
+
+4272816 sim.del-chr20_000.A1.ref.dat
+4270734 sim.del-chr20_000.A2.ref.dat
+8543568 sim.del-chr20_000.A.dat
+8543550 sim.del-chr20_000.A.ref.dat
+1022460 sim.del-chr20_000.A.ref.filt.dat
+4272814 sim.del-chr20_000.B1.ref.dat
+4270732 sim.del-chr20_000.B2.ref.dat
+8543568 sim.del-chr20_000.B.dat
+8543546 sim.del-chr20_000.B.ref.dat
+1022096 sim.del-chr20_000.B.ref.filt.dat
+4270734 sim.del-chr20_000.A.ref.down2.dat
+ 510766 sim.del-chr20_000.A.ref.down2.filt.dat
+1022460 sim.del-chr20_000.A.ref.filt.dat
+4270732 sim.del-chr20_000.B.ref.down2.dat
+ 511940 sim.del-chr20_000.B.ref.down2.filt.dat
+1022096 sim.del-chr20_000.B.ref.filt.dat
+
+
