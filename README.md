@@ -6,7 +6,7 @@ San Diego patel [dot] anandd [at] gmail [dot] com
 
 InPhaDel takes as input, a scaffold of phased single nucleotide variants (vcf),
 whole genome sequencing data (sorted bam), proximity ligation data (sorted
-bam), and deletions (bed) and a classification model ('pkl').
+bam), and deletions (bed) and a classification model ('rf|svm|knn').
 
 InPhaDel returns a prediction for the deletion being homozygous, scaffold A,
 scaffold B, or unlikely to be a deletion (bed).  For details of the method, see
