@@ -112,6 +112,23 @@ class SimpleSumFeatures(Features):
 	def __init__(self, filled_data_objs, feature_subset=None):
 		Features.__init__(self, filled_data_objs, feature_subset)
 	def get_features(self):
+		if not self._features is None:
+			return self._features
+
+		feats = []
+		
+		for d in self._data:
+			self._prep_data()
+			c = self._feature_subset.data_subset(d)
+			f = pd.concat(map(d._rm_break_info,c), axis=0, ignore_index=True)
+			cols_set = set(list(f.columns))
+			h = [i for i in d.row_index_header if i in cols_set]
+
+			f = f.set_index(h)
+			d.prep_once_flag = True
+			feats.append(f)
+		
+			
 		raise NotImplementedError()
 
 class SqDiffAlleleFeatures(Features):

@@ -5,6 +5,7 @@ import sys
 import pandas as pd
 import numpy as np
 import pickle
+import argparse
 import warnings
 from itertools import chain, compress
 from svphase.learn.cov import FileStructureData, RPKMAdaptor
@@ -106,19 +107,21 @@ def check_for_contig_bam_and_split(input_dir, data_src, contig):
 		split_reads_by_allele(os.path.join(input_dir, 'vcf', contig+'.vcf'), contig_all_bam, contig_allele_bam.format(allele='A'), contig_allele_bam.format(allele='B'))
 
 	
+def default_arguments(parser):
+	parser.add_argument('model', default='rf', help='Model used to classify deletions (rf - RandomForest, svm - Support Vector Machine, nn - Nearest Neighbors)', choices=['rf','svm','knn'])
+	#parser.add_argument('--test', dest='test', action='store_true', default=False, help='Run unit tests to ensure proper installation')
+	parser.add_argument('-r,--reference', dest='reference_fasta', default=None, help='path to reference fasta (defaults to reference in config.py)')
+	parser.add_argument('--debug', dest='debug', action='store_true', default=False, help=argparse.SUPPRESS)
+
 
 def main():
-	import argparse
 	import logging
 	from pkg_resources import Requirement, resource_filename
 
 	parser = argparse.ArgumentParser(description=__doc__)
 	parser.add_argument('bed', help='Simple bed file containing deletions (coordinates on reference)')
 	parser.add_argument('input_dir', help='directory containing input hic bam, wgs bam, and idxstat files.')
-	parser.add_argument('model', default='rf', help='Model used to classify deletions (rf - RandomForest, svm - Support Vector Machine, nn - Nearest Neighbors)', choices=['rf','svm','knn'])
-	#parser.add_argument('--test', dest='test', action='store_true', default=False, help='Run unit tests to ensure proper installation')
-	parser.add_argument('--debug', dest='debug', action='store_true', default=False, help=argparse.SUPPRESS)
-	parser.add_argument('-r,--reference', dest='reference_fasta', default=None, help='path to reference fasta (defaults to reference in config.py)')
+	default_arguments(parser)
 	parser.add_argument('-o,--out-csv', dest='out_csv', default='out.txt', help='tab-deliminted file to output phasing predictions (default: out.txt)')
 
 	args = parser.parse_args()
