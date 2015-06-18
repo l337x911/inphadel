@@ -4,11 +4,19 @@ from operator import itemgetter
 import pandas as pd
 from itertools import chain
 
-pd.set_printoptions(max_rows=10000,max_columns=10000)
+pd.set_option("display.max_rows",10000)
+pd.set_option("display.max_columns",10000)
 
 class SNPTransmit(object):
-  def __init__(self, pat_id, mat_id):
+  def __init__(self, pat_id, mat_id, hapmap_fpath_fmt, vcf_fpath_fmt):
     self.current_chrom = None
+
+    #self.hapmap_fpath = '/media/T02/data/hapmap/phased/hapmap3_r2_b36_fwd.consensus.qc.poly.%s_ceu.phased'%chrom
+    #self.vcf_fpath = '/media/T02/data/hic/hic_phasing_vcf/%s_step2_inference'%chrom
+
+    self.hapmap_fpath_fmt = hapmap_fpath_fmt
+    self.vcf_fpath_fmt = vcf_fpath_fmt
+
     self.hapmap_fpath = None
     self.vcf_fpath = None
     
@@ -49,8 +57,9 @@ class SNPTransmit(object):
       return self.transmit_t
 
     self.current_chrom = chrom
-    self.hapmap_fpath = '/media/T02/data/hapmap/phased/hapmap3_r2_b36_fwd.consensus.qc.poly.%s_ceu.phased'%chrom
-    self.vcf_fpath = '/media/T02/data/hic/hic_phasing_vcf/%s_step2_inference'%chrom
+    self.hapmap_fpath = self.hapmap_fpath_fmt.format(chrom=chrom)
+    self.vcf_fpath = self.vcf_fpath_fmt.format(chrom=chrom)
+    #print self.hapmap_fpath, self.vcf_fpath
 
     hm_df, hm_id_df= self.get_hets()
     sel_df,sel_pos_df = self.vcf_phased()
@@ -86,8 +95,7 @@ class SNPTransmit(object):
     return t
   def _map_parent_to_homolog(self, parent):
     # assumes transmit is stored
-    homologs = ['pA','pB']
-    return homologs[na.argmax(self.transmit_s[['A_%s'%parent, 'B_%s'%parent]])]
+    return 'p'+na.argmax(self.transmit_s.loc[['A_%s'%parent, 'B_%s'%parent]])[0]
 
   def assign_dels_to_homolog(self, df, parent):    
     g = df.groupby('chr')
