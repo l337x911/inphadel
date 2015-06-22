@@ -91,7 +91,7 @@ def algorithm_to_dels(approach, supp_csv_fpath, pm_to_m_map_fpath, m_sites_fpath
 			#m_sites[key]='.'
 			new_idx = final.index.intersection(m_sites.index)
 			#final['class'] = final['class'].astype(str)
-			f_c =  pd.DataFrame(final.ix[new_idx,'class'].values, index=new_idx, columns=[key,])
+			f_c =	pd.DataFrame(final.ix[new_idx,'class'].values, index=new_idx, columns=[key,])
 			m_sites = pd.concat([m_sites, f_c], axis=1)
 			m_sites[key] = m_sites[key].fillna('.')
 		m_sites = sort_chr(m_sites)
@@ -104,7 +104,10 @@ def algorithm_to_dels(approach, supp_csv_fpath, pm_to_m_map_fpath, m_sites_fpath
 		#sort_chr(m_sites.ix[(mids_s[off]>=1).index,:]).to_csv(sys.stdout, header=False, index=False, sep='\t')
 		pd.Series((mids_s[off]>=1).index).to_csv(sys.stdout, header=False, index=False, sep='\t')
 	else:
-		final = infer_transmit(m_sites, mids_s, off,pat,mat,somatic_flag=somatic_flag) 
+		final = infer_transmit(m_sites, mids_s, off,pat,mat,somatic_flag=somatic_flag)
+		final = final.dropna(axis=0, how='any') 
+		final['start'] = final['start'].astype(int)
+		final['end'] = final['end'].astype(int)
 		final.to_csv(sys.stdout, header=False, index=False, sep='\t')
 
 hapmap_fmt = None
@@ -129,7 +132,7 @@ def infer_transmit(m_sites, mids_s, off,pat,mat, somatic_flag=False, sort_flag=T
 	if sort_flag:
 		final = sort_chr(final)
 	if somatic_flag:
-		final = m_sites.ix[na.logical_and(mids_s[off]==1,(mids_s[mat]+mids_s[pat])==0),:]	  
+		final = m_sites.ix[na.logical_and(mids_s[off]==1,(mids_s[mat]+mids_s[pat])==0),:]		
 	return final
 
 if __name__ == '__main__':

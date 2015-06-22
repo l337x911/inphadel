@@ -24,7 +24,6 @@ class ClassLabel(object):
 		self.int_to_str_dict = dict(zip(range(len(self.classes)), self.classes))
 		self.str_to_int_dict = dict(zip(self.classes, range(len(self.classes))))
 
-
 class Predictor(object):
 	def __init__(self, pickle_fpath, feature_subset=None):
 		self.feature_subset = feature_subset
