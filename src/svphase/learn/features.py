@@ -79,6 +79,11 @@ class Features(object):
 		
 		self._nonzero_loci = np.concatenate(map(self._feature_subset.data_nonzero, self._data))
 		return self._nonzero_loci
+
+	def save(self, features_prefix):
+		fmt = features_prefix + ".{ext}"
+		self._features.to_pickle(fmt.format(ext='pkl'))
+		np.savez(fmt.format(ext='npz'), nonzero=self._nonzero_loci)
 	
 	def get_features(self):
 		if not self._features is None:
@@ -107,6 +112,28 @@ class Features(object):
 		return self._features
 	def get_nonzero_features(self):
 		return self.get_features().loc[self.get_nonzero(),:]
+
+class PreloadFeatures(Features):
+	""" Contains features from filled data features """
+	def __init__(self, features_prefix):
+		Features.__init__(self, [])
+		fmt = features_prefix + ".{ext}"
+		self._features_pkl = fmt.format(ext='pkl')
+		self._nonzero_npz = fmt.format(ext='npz')
+	def save(self, features_prefix):
+		""" Already saved. Do nothing """
+		pass
+	def get_features(self):
+		if not self._features is None:
+			return self._features
+		self._features = pd.read_pickle(self._features_pkl)
+		return self._features
+	def get_nonzero(self):
+		if not self._nonzero_loci is None:
+			return self._nonzero_loci
+		with np.load(self._nonzero_npz) as npzfile:
+			self._nonzero_loci = npzfile['nonzero']
+		return self._nonzero_loci
 
 class SimpleSumFeatures(Features):
 	def __init__(self, filled_data_objs, feature_subset=None):

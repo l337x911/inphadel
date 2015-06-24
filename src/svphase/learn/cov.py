@@ -598,7 +598,7 @@ class FileStructureData(Data):
 class FileStructureDataWithTruth(Data):
 	def __init__(self, wgs_prefix_path, hic_prefix_path, sv_fpath, contig, file_fmt='bam', ref_fpath=None):
 
-		fmt_str = os.path.join("{prefix}","{contig}.{type}.bam")
+		fmt_str = os.path.join("{prefix}","{contig}.{type}.{ext}")
 
 		Data.__init__(self, ref_fpath=ref_fpath, contig=contig)
 		self.wgs_fpath = fmt_str.format(prefix=wgs_prefix_path, contig=contig, ext=file_fmt, type='all')
@@ -617,13 +617,11 @@ class FileStructureDataWithTruth(Data):
 				if line.startswith('track'): continue
 				tokens = line.strip().split('\t')
 				if tokens[0]!=self.contig: continue
-				self.loci.append(tokens[0], int(tokens[1]), int(tokens[2]))
+				self.loci.append((tokens[0], int(tokens[1]), int(tokens[2])))
 				self.truth.append(tokens[3])
 
 class DataAdaptor(object):
 	def __init__(self):
-		pass
-	def adapt_load_prefix_fpath(self, data_obj):
 		pass
 	def adapt(self, data_obj):
 		pass
@@ -645,10 +643,6 @@ class RPKMAdaptor(DataAdaptor):
 		i, c = df.index[break_info_idx:], df.columns[col_start:]
 		df.ix[i, c] = df.ix[i, c].astype(float) * norm
 
-	def adapt_load_prefix_fpath(self, data_obj):
-		if not data_obj.load_prefix_fpath.endswith('.2c'):
-			data_obj.load_prefix_fpath = '{0}.2c'.format(data_obj.load_prefix_fpath)
-		return data_obj
 	def adapt(self, data_obj):
 		self._apply_to_df(data_obj, data_obj.wgs, self.norm_wgs) 
 		self._apply_to_df(data_obj, data_obj.wgs_allele, self.norm_wgs) 

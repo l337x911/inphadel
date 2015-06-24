@@ -20,7 +20,7 @@ __version__ = '1.0'
 
 class ClassLabel(object):
 	def __init__(self):
-		self.classes = ['inc','pA','hom', 'pB']
+		self.classes = ['pA','pB','hom', 'inc']
 		self.int_to_str_dict = dict(zip(range(len(self.classes)), self.classes))
 		self.str_to_int_dict = dict(zip(self.classes, range(len(self.classes))))
 

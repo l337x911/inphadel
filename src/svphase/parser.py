@@ -5,7 +5,7 @@ Created on Jan 29, 2014
 '''
 import struct
 import os
-import numpy as na
+import numpy as np
 from itertools import imap
 from operator import itemgetter
 from subprocess import Popen, PIPE
@@ -63,7 +63,7 @@ class ReadsParserDat(object):
 		self.index = []
 		self.n = os.path.getsize(fpath) / self.struct.size
 		if os.path.isfile("%s.npz" % fpath):
-			npzfile = na.load("%s.npz" % fpath)
+			npzfile = np.load("%s.npz" % fpath)
 			self.index = npzfile['index']
 			npzfile.close()
 			return
@@ -75,10 +75,12 @@ class ReadsParserDat(object):
 				except struct.error:
 					break
  
-		self.index = na.array(self.index, dtype=CONTIG_POS_TYPE)
+		self.index = np.array(self.index, dtype=CONTIG_POS_TYPE)
 		# print self.index, self.n, self.struct.size
+		#print self.index
+		#print np.where(self.index[1:]-self.index[:-1]<0)
 		assert all(self.index[i] <= self.index[i + 1] for i in xrange(len(self.index) - 1))
-		na.savez("%s.npz" % fpath, index=self.index)
+		np.savez("%s.npz" % fpath, index=self.index)
 
 	def get_single_read_count(self, fpath):
 		if fpath != self.current_fpath:
@@ -98,9 +100,9 @@ class ReadsParserDat(object):
 
 		i, j = 0, self.n
 		if not start is None:
-			i = na.searchsorted(self.index, start - READLENGTH + 1, side='left')
+			i = np.searchsorted(self.index, start - READLENGTH + 1, side='left')
 		if not end is None:
-			j = na.searchsorted(self.index, end + READLENGTH - 1, side='right')
+			j = np.searchsorted(self.index, end + READLENGTH - 1, side='right')
 		
 		uniqify = set()
 		# print i,j
