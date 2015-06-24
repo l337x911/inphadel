@@ -86,46 +86,74 @@ class Trainer(object):
 
 		logger.info("Loaded %d truth labels", len(self.labels))
 	
-	def check_stable(self, scores, params_df):
+	def check_stable(self, scores, common_params_df):
 		thresh = 0.10
 		deviation = max(scores)-min(scores)
 
 		if deviation>thresh:
 			logger.warning('Model test accuracies deviate more than {thresh:0.1f}%, Deviation {dev:0.4f}'.format(thresh=thresh*100, dev=deviation))
 
-		common_params = params_df.groupedby(list(params_df.columns))
-		if len(common_params.groups)>1:
-			logger.warning('Model had unstable parameters\n{len:%s}'.format(common_params.apply(len)))
+		if len(common_params_df.index)>1:
+			logger.warning('Model had unstable parameters\n{len:s}'.format(len=common_params_df))
 
 	def train(self, model):
 		data = self.feats.get_nonzero_features()
+		data = data.fillna(0).astype(np.float64).values
+		print np.isfinite(data)
+		assert np.isfinite(data).all()
 		labels_str = np.array(self.labels)[self.feats.get_nonzero()]
 		labels_int = map(self.label_obj.str_to_int_dict.get, labels_str)
 		logger.debug(labels_str)
 		logger.debug(labels_int)
-		labels = np.array(labels_str, dtype=int)
-
+		labels = np.array(labels_int, dtype=int)
+		logger.debug(labels)
 		# Applies Nested Cross Validation on data + labels
-		outer_skf = StratifiedKFold(labels, self.k, shuffle=True, random_state=model.random_state)
+		#outer_skf = StratifiedKFold(labels, n_folds=self.k)
+		outer_skf = StratifiedKFold(labels, n_folds=self.k, shuffle=True, random_state=model.random_state)
+
 
 		scores = []
 		best_params = []
-
+		
+		logger.debug('Data shape %s, label shape %s', data.shape, labels.shape)
 		for fold, (train_index, test_index) in enumerate(outer_skf):
 			# Perform a new inner cross validation
-			outer_skf = StratifiedKFold(labels[train_index], self.k, shuffle=True, random_state=model.random_state)
-			grid_clf = GridSearchCV(estimator=model.clf, param_grid=model.params, scoring=accuracy_score, n_jobs=-1, cv=outer_skf, refit=True, verbose=True)
-			grid_clf.fit(data[train_index], labels[train_index])
+			logger.debug('Train shape %s, test shape %s', train_index.shape, test_index.shape)
+
+			train_data, test_data = data[train_index,:], data[test_index,:]
+			train_label, test_label = labels[train_index], labels[test_index]
+			logger.debug('Train Data shape %s, Train Label shape %s', train_data.shape, train_label.shape)
+			inner_skf = StratifiedKFold(train_label, n_folds=self.k, shuffle=True, random_state=model.random_state)
+			grid_clf = GridSearchCV(model.clf, param_grid=model.params, scoring='accuracy', n_jobs=-1, cv=inner_skf, refit=True, verbose=1)
+			grid_clf.fit(train_data, train_label)
 			
-			test_accuracy = accuracy_score(labels[test_index], grid_clf.best_estimator_.predict(data[test_index]))
+			test_accuracy = accuracy_score(test_label, grid_clf.best_estimator_.predict(test_data))
 			scores.append(test_accuracy)
 			best_params.append(pd.Series(grid_clf.best_params_))
 
+			#logger.debug('OUTER: %0.4f test accuracy on fold %d', test_accuracy, fold)
 			logger.debug('OUTER: %0.4f test accuracy with params %s on fold %d', test_accuracy, grid_clf.best_params_, fold)
 			for pt in grid_clf.grid_scores_:
 				logger.debug(' INNER: %.4f avg accuracy with params %s and scores %s', pt.mean_validation_score, pt.parameters, ','.join(map('{0:0.4f}'.format,pt.cv_validation_scores)))
-			
-		self.check_stable(scores, pd.concat(best_params, axis=1).T)	
+				pass
+		params_df =  pd.concat(best_params, axis=1).T
+		common_params = params_df.groupby(list(params_df.columns)).apply(len)
+		self.check_stable(scores, common_params)
+		argmax = common_params.argmax()
+		try:
+			iter(argmax)
+		except TypeError:
+			argmax = [argmax,]		
+	
+		outer_best_params = dict(zip(common_params.index.names, argmax))
+		# Final Fit!
+		model.clf.set_params(**outer_best_params)
+		model.clf.fit(data, labels)
+		final_accuracy = accuracy_score(labels, model.clf.predict(data))
+		logger.info('Final accuracy: %0.4f with params %s', final_accuracy, outer_best_params)
+		with open(model.pkl, 'wb') as f:
+			pickle.dump(model.clf, f)
+		
 
 class PrepTrainingFileStructure(object):
 	def __init__(self, idir, ftype):
@@ -225,7 +253,7 @@ def main():
 	parser.add_argument('--seed', type=int, default=None, help='Random initial state for some training procedures')
 	parser.add_argument('-P', '--preload-features', dest='preload_feats', action='store_true', default=False, help='Preload features from disk. Fpath is derived from model/version')
 	parser.add_argument('-S', '--save-features', dest='save_feats', action='store_true', default=False, help='Save features to disk  for speed. Fpath is derived from model/version')
-	parser.add_argument('-k', default=5, help='# of folds in nested cross validation')	
+	parser.add_argument('-k', type=int, default=5, help='# of folds in nested cross validation')	
 
 	args = parser.parse_args()
 
