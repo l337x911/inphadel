@@ -31,12 +31,29 @@ class Model(object):
 		self.random_state = random_state
 		self.clf = None
 		self.params = {}
+	def clf_stats(self):
+		pass
 
 class SVMModel(Model):
 	def __init__(self, model_pkl, random_state):
 		Model.__init__(self, model_pkl, random_state)
 		self.clf = svm.SVC(kernel='linear', probability=True, random_state=self.random_state)
 		self.params = {'C':[1,10,100]}
+
+class RFModel(Model):
+	def __init__(self, model_pkl, random_state):
+		Model.__init__(self, model_pkl, random_state)
+		self.clf = ensemble.RandomForestClassifier(oob_score=True, random_state=self.random_state)
+		self.params = {'n_estimators':[10,20,50,100], 'max_depth':[2,5,10,20]}
+	def clf_stats(self):
+		logger.info('RFModel: OOB_Score {0:0.4f}'.format(self.clf.oob_score_))
+		
+
+class KNNModel(Model):
+	def __init__(self, model_pkl, random_state):
+		Model.__init__(self, model_pkl, random_state)
+		self.clf = KNeighborsClassifier(n_neighbors=5, weights='uniform', algorithm='brute')
+		self.params = {'n_neighbors':[2,4,8,16,32]}
 
 class Trainer(object):
 	def __init__(self, k=5, feature_subset=None): 
@@ -96,10 +113,11 @@ class Trainer(object):
 		if len(common_params_df.index)>1:
 			logger.warning('Model had unstable parameters\n{len:s}'.format(len=common_params_df))
 
+	def _to_series(self, outer_fold, inner_fold, test_accuracy, params):
+		return pd.concat([pd.Series([outer_fold, inner_fold, test_accuracy], index=['outer_fold','inner_fold', 'test_accuracy']), pd.Series(params, dtype=int)])
 	def train(self, model):
 		data = self.feats.get_nonzero_features()
 		data = data.fillna(0).astype(np.float64).values
-		print np.isfinite(data)
 		assert np.isfinite(data).all()
 		labels_str = np.array(self.labels)[self.feats.get_nonzero()]
 		labels_int = map(self.label_obj.str_to_int_dict.get, labels_str)
@@ -111,10 +129,9 @@ class Trainer(object):
 		#outer_skf = StratifiedKFold(labels, n_folds=self.k)
 		outer_skf = StratifiedKFold(labels, n_folds=self.k, shuffle=True, random_state=model.random_state)
 
-
 		scores = []
-		best_params = []
-		
+	
+		skf_stats = []	
 		logger.debug('Data shape %s, label shape %s', data.shape, labels.shape)
 		for fold, (train_index, test_index) in enumerate(outer_skf):
 			# Perform a new inner cross validation
@@ -129,15 +146,24 @@ class Trainer(object):
 			
 			test_accuracy = accuracy_score(test_label, grid_clf.best_estimator_.predict(test_data))
 			scores.append(test_accuracy)
-			best_params.append(pd.Series(grid_clf.best_params_))
 
 			#logger.debug('OUTER: %0.4f test accuracy on fold %d', test_accuracy, fold)
-			logger.debug('OUTER: %0.4f test accuracy with params %s on fold %d', test_accuracy, grid_clf.best_params_, fold)
+			logger.info('OUTER: %0.4f test accuracy with params %s on fold %d', test_accuracy, grid_clf.best_params_, fold)
+			skf_stats.append(self._to_series(fold, None, test_accuracy, grid_clf.best_params_))
 			for pt in grid_clf.grid_scores_:
-				logger.debug(' INNER: %.4f avg accuracy with params %s and scores %s', pt.mean_validation_score, pt.parameters, ','.join(map('{0:0.4f}'.format,pt.cv_validation_scores)))
-				pass
-		params_df =  pd.concat(best_params, axis=1).T
-		common_params = params_df.groupby(list(params_df.columns)).apply(len)
+				logger.info(' INNER: %.4f avg accuracy with params %s and scores %s', pt.mean_validation_score, pt.parameters, ','.join(map('{0:0.4f}'.format,pt.cv_validation_scores)))
+				for inner_fold, cv_score in enumerate(pt.cv_validation_scores):
+					skf_stats.append(self._to_series(fold, inner_fold, cv_score, pt.parameters))
+
+		skf_stats_df =  pd.concat(skf_stats, axis=1).T
+		param_cols = skf_stats_df.columns[3:]
+		skf_stats_df[param_cols] = skf_stats_df[param_cols].astype(int)
+		#skf_stats_df[['outer_fold','inner_fold']] = skf_stats_df[['outer_fold','inner_fold']].astype(int)
+
+		skf_stats_df.to_csv(model.pkl + '.stat', sep='\t', index=False, header=True, float_format="%0.4f") 
+		# Assumes skf_stats_df columns are outer_fold, inner_fold, accuracy, param1, param2, ...
+		outer_params_df = skf_stats_df.ix[skf_stats_df['inner_fold'].isnull(),param_cols]
+		common_params = outer_params_df.groupby(list(outer_params_df.columns)).apply(len)
 		self.check_stable(scores, common_params)
 		argmax = common_params.argmax()
 		try:
@@ -146,14 +172,16 @@ class Trainer(object):
 			argmax = [argmax,]		
 	
 		outer_best_params = dict(zip(common_params.index.names, argmax))
+		logger.info('Final Params %s', outer_best_params)
 		# Final Fit!
 		model.clf.set_params(**outer_best_params)
 		model.clf.fit(data, labels)
+		model.clf_stats()
+
 		final_accuracy = accuracy_score(labels, model.clf.predict(data))
 		logger.info('Final accuracy: %0.4f with params %s', final_accuracy, outer_best_params)
 		with open(model.pkl, 'wb') as f:
 			pickle.dump(model.clf, f)
-		
 
 class PrepTrainingFileStructure(object):
 	def __init__(self, idir, ftype):
@@ -264,7 +292,7 @@ def main():
 
 	random_state=int(time.time())%1000000
 
-	model_pkl = resource_filename(Requirement.parse('InPhaDel'), 'models/{m}.{v}.pkl'.format(m=args.model.upper(), v=args.version))
+	model_pkl = resource_filename(Requirement.parse('InPhaDel'), 'models/{m}.{v}.pkl'.format(m=args.model, v=args.version))
 
 	ref_fpath=args.reference_fasta
 	feats_to_disk = resource_filename(Requirement.parse('InPhaDel'), 'models/feats.{v}'.format(v=args.version))
@@ -294,9 +322,13 @@ def main():
 	trainer.set_labels(save_prefix=save_prefix, preload_prefix=preload_prefix)
 
 	if args.model=='svm':
-			m = SVMModel(model_pkl, args.seed)
+		M = SVMModel
+	elif args.model=='rf':
+		M = RFModel
+	elif args.model=='knn':
+		M = KNNModel	
 
-	acc = trainer.train(m)
+	acc = trainer.train(M(model_pkl, args.seed))
 
 if __name__ == '__main__':
 	main()
