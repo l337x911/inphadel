@@ -89,7 +89,8 @@ class SVModifier(Chromosome):
 		pass
 
 class DelModifier(SVModifier):
-	def __init__(self, ref_obj, contig, chr_obj, sv_fpath):
+	def __init__(self, ref_obj, contig, chr_obj, sv_fpath, no_split_flag=True):
+		self.set_no_split = no_split_flag
 		SVModifier.__init__(self, ref_obj, contig, chr_obj, sv_fpath)
 		self.sv_name = "del"
 		self.contig = "del-%s"%self.contig
@@ -110,10 +111,11 @@ class DelModifier(SVModifier):
 		self.map_new_to_origin = self.map_origin_to_new[sv_idx]
 		
 		self.map_origin_to_new[sv_idx] = na.arange(self.map_new_to_origin.size, dtype=CONTIG_POS_TYPE)
-		self.map_new_to_origin_no_split = na.copy(self.map_new_to_origin)		
+		if self.set_no_split:
+			self.map_new_to_origin_no_split = na.copy(self.map_new_to_origin)		
 
-		for i,j in self.sv:
-			self.map_new_to_origin_no_split[self.map_origin_to_new[p1 - READLENGTH-1:p1]] = CONTIG_TYPE_MAX
+			for i,j in self.sv:
+				self.map_new_to_origin_no_split[self.map_origin_to_new[p1 - READLENGTH-1:p1]] = CONTIG_TYPE_MAX
 			#self.map_new_to_origin[self.map_origin_to_new[p2:p2+READLENGTH-1]] = CONTIG_TYPE_MAX
 
 		#print len(self.origin_chr.get_seq()), self.map_origin_to_new.size, self.map_new_to_origin.size, self.map_new_to_origin_no_split

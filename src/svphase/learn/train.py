@@ -115,6 +115,23 @@ class Trainer(object):
 
 	def _to_series(self, outer_fold, inner_fold, test_accuracy, params):
 		return pd.concat([pd.Series([outer_fold, inner_fold, test_accuracy], index=['outer_fold','inner_fold', 'test_accuracy']), pd.Series(params, dtype=int)])
+
+	def manual_check(self):
+		pd.set_option('display.max_rows', 999)
+		pd.set_option('display.max_columns', 999)
+		pd.set_option('display.height', 999)
+		pd.set_option('display.width', 999)
+		data = self.feats.get_nonzero_features()
+		data = data.fillna(0).astype(np.float64)
+		labels_str = np.array(self.labels)[self.feats.get_nonzero()]
+		labels_int = map(self.label_obj.str_to_int_dict.get, labels_str)
+		label_str_idx = pd.MultiIndex.from_tuples([tuple(['truth_str',] + [np.nan,]*(len(data.columns.names)-1)),], names=data.columns.names)
+		label_int_idx = pd.MultiIndex.from_tuples([tuple(['truth_int',] + [np.nan,]*(len(data.columns.names)-1)),], names=data.columns.names)
+
+		inspect = pd.concat([pd.DataFrame(labels_str, index=data.index, columns=label_str_idx), pd.DataFrame(labels_int, index=data.index, columns=label_int_idx), data], names=data.columns.names, axis=1)
+		print inspect
+		#logger.info('\n%s', inspect)
+
 	def train(self, model):
 		data = self.feats.get_nonzero_features()
 		data = data.fillna(0).astype(np.float64).values
@@ -282,6 +299,7 @@ def main():
 	parser.add_argument('-P', '--preload-features', dest='preload_feats', action='store_true', default=False, help='Preload features from disk. Fpath is derived from model/version')
 	parser.add_argument('-S', '--save-features', dest='save_feats', action='store_true', default=False, help='Save features to disk  for speed. Fpath is derived from model/version')
 	parser.add_argument('-k', type=int, default=5, help='# of folds in nested cross validation')	
+	parser.add_argument('-C', '--check-features', dest='check_feats', action='store_true', default=False, help='Outputs features for training data')	
 
 	args = parser.parse_args()
 
@@ -327,8 +345,10 @@ def main():
 		M = RFModel
 	elif args.model=='knn':
 		M = KNNModel	
-
-	acc = trainer.train(M(model_pkl, args.seed))
+	if args.check_feats:
+		trainer.manual_check()
+	else:
+		acc = trainer.train(M(model_pkl, args.seed))
 
 if __name__ == '__main__':
 	main()

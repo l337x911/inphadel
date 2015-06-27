@@ -87,7 +87,11 @@ class ReadsParserDat(object):
 			self._index(fpath)
 			if not self.f is None:
 				self.f.close()
-		return self.n
+
+		# count single reads which did not map to the chromosome
+		unmapped_count = np.searchsorted(self.index, 0, side='right')
+
+		return self.n - unmapped_count
 	
 	def get_reads(self, fpath, contig, start=None, end=None):
 		if fpath != self.current_fpath:

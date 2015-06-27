@@ -3,7 +3,7 @@ from svphase.parser import ReadsParserDat
 
 def number_of_reads(fpath):
   r = ReadsParserDat()
-  return r.get_single_read_count(fpath)/2   
+  return r.get_single_read_count(fpath)   
 
 def number_of_reads_at_dist(fpath, x):
   r = ReadsParserDat()

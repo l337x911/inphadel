@@ -23,6 +23,16 @@ class ClassLabel(object):
 		self.classes = ['pA','pB','hom', 'inc']
 		self.int_to_str_dict = dict(zip(range(len(self.classes)), self.classes))
 		self.str_to_int_dict = dict(zip(self.classes, range(len(self.classes))))
+	def is_deletion_on_a(self, c):
+		if c=='pA' or c=='hom':
+			return True
+		else: 
+			return False
+	def is_deletion_on_b(self, c):
+		if c=='pB' or c=='hom':
+			return True
+		else: 
+			return False
 
 class Predictor(object):
 	def __init__(self, pickle_fpath, feature_subset=None):
