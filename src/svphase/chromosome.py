@@ -89,11 +89,10 @@ class SVModifier(Chromosome):
 		pass
 
 class DelModifier(SVModifier):
-	def __init__(self, ref_obj, contig, chr_obj, sv_fpath, no_split_flag=True):
-		self.set_no_split = no_split_flag
+	def __init__(self, ref_obj, contig, chr_obj, sv_fpath):
 		SVModifier.__init__(self, ref_obj, contig, chr_obj, sv_fpath)
 		self.sv_name = "del"
-		self.contig = "del-%s"%self.contig
+		self.contig = self.contig
 	def _load(self, sv_fpath):
 		self.map_origin_to_new = na.arange(self.origin_chr.length, dtype=CONTIG_POS_TYPE)
 
@@ -111,18 +110,32 @@ class DelModifier(SVModifier):
 		self.map_new_to_origin = self.map_origin_to_new[sv_idx]
 		
 		self.map_origin_to_new[sv_idx] = na.arange(self.map_new_to_origin.size, dtype=CONTIG_POS_TYPE)
-		if self.set_no_split:
-			self.map_new_to_origin_no_split = na.copy(self.map_new_to_origin)		
 
-			for i,j in self.sv:
-				self.map_new_to_origin_no_split[self.map_origin_to_new[p1 - READLENGTH-1:p1]] = CONTIG_TYPE_MAX
-			#self.map_new_to_origin[self.map_origin_to_new[p2:p2+READLENGTH-1]] = CONTIG_TYPE_MAX
-
-		#print len(self.origin_chr.get_seq()), self.map_origin_to_new.size, self.map_new_to_origin.size, self.map_new_to_origin_no_split
-
+	def set_seq(self):
 		origin_seq = na.fromstring(self.origin_chr.get_seq(), dtype='S1')
 		self.seq = ''.join(origin_seq[self.map_new_to_origin])
 		self.length = len(self.seq)
+
+	def out_fasta(self, fpath):
+		with open(fpath, 'wb') as f:
+			print >> f, ">%s\n%s" % (self.contig, self.seq)
+
+class DelModifierRefMap(DelModifier):
+	def __init__(self, ref_obj, contig, chr_obj, sv_fpath):
+		DelModifier.__init__(self, ref_obj, contig, chr_obj, sv_fpath)
+		self.contig = self.contig
+	def _load(self, sv_fpath):
+		DelModifier._load(self,sv_fpath)
+
+		# Since it's useless.
+		self.seq = None
+		self.origin_chr.seq = None
+
+		self.map_new_to_origin_no_split = na.copy(self.map_new_to_origin)		
+		# Remove split reads
+		for i,j in self.sv:
+			self.map_new_to_origin_no_split[i - READLENGTH-1:i] = CONTIG_TYPE_MAX
+
 	def derive_reference_position(self, pos):
 		if pos<0 or pos>=self.map_new_to_origin_no_split.size:
 			return None
@@ -131,11 +144,7 @@ class DelModifier(SVModifier):
 		if p==CONTIG_TYPE_MAX:
 			return None
 		return p
-
-	def out_fasta(self, fpath):
-		with open(fpath, 'wb') as f:
-			print >> f, ">%s-%s\n%s" % (self.sv_name, self.contig, self.seq)
-			
+	
 def print_cutsites():
 	from svphase.utils import reference
 	chrom = Chromosome(reference.Reference('/media/ET01/data/hg/hg18/chr19.fa'),'chr19')

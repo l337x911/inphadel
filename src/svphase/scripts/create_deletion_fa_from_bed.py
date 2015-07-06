@@ -23,7 +23,8 @@ def create_del_chromosomes(contig, ref_fpath, sv_fpath, out_dir):
 				contigA_f.write(line)
 		contigA_f.flush()
 		
-		derchromA = DelModifier(ref_obj, contig, chrom, contigA_f.name, no_split_flag=False)
+		derchromA = DelModifier(ref_obj, contig, chrom, contigA_f.name)
+		derchromA.set_seq()
 		derchromA.out_fasta("{out}/{contig}.chromA.fa".format(out=out_dir, contig=contig))
 	derchromA = None
 
@@ -35,7 +36,8 @@ def create_del_chromosomes(contig, ref_fpath, sv_fpath, out_dir):
 				contigB_f.write(line)
 		contigB_f.flush()
 		
-		derchromB = DelModifier(ref_obj, contig, chrom, contigB_f.name, no_split_flag=False)
+		derchromB = DelModifier(ref_obj, contig, chrom, contigB_f.name)
+		derchromB.set_seq()
 		derchromB.out_fasta("{out}/{contig}.chromB.fa".format(out=out_dir, contig=contig))
 
 if __name__ == '__main__':

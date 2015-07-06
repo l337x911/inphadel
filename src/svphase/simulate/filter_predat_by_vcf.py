@@ -5,8 +5,6 @@ from svphase.utils.config import READLENGTH
 from svphase.utils.common import iter_paired_lines
 
 def filter_predat(vcf_fpath):
-	p = ReadsParserDat()
-	
 	het_pos = []
 	with open(vcf_fpath, 'rb') as f:
 		for line in f:
@@ -25,7 +23,7 @@ def filter_predat(vcf_fpath):
 
 	for rowa,rowb in iter_paired_lines(sys.stdin):
 		idx, posa, rev_ca, posb, rev_cb = rowa.strip().split('\t')
-		
+		posa, posb = int(posa), int(posb)
 		snpa, snpb = het_pos[np.searchsorted(het_pos, (posa, posb), side='right')]
 		snpa -= posa
 		snpb -= posb

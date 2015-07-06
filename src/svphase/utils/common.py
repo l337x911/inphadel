@@ -26,6 +26,7 @@ logger.addHandler(ch)
 
 def iter_paired_lines(stream):
 	prev = None
+	idx = 0
 	for idx, line in enumerate(stream):
 		if idx%2==1:
 			yield prev, line

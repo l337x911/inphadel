@@ -65,6 +65,7 @@ class ReadsParserDat(object):
 		if os.path.isfile("%s.npz" % fpath):
 			npzfile = np.load("%s.npz" % fpath)
 			self.index = npzfile['index']
+			assert self.n == len(self.index)
 			npzfile.close()
 			return
 				
@@ -82,6 +83,25 @@ class ReadsParserDat(object):
 		assert all(self.index[i] <= self.index[i + 1] for i in xrange(len(self.index) - 1))
 		np.savez("%s.npz" % fpath, index=self.index)
 
+	def get_max_index_count(self, fpath):
+
+		if self.f is None or self.f.closed:
+			self.f = open(fpath, 'rb')
+		self.f.seek(0)
+
+		max_idx = 0
+		row_size = self.struct.size
+		while True:
+			
+			row_str = self.f.read(self.struct.size)
+			if row_str == '':
+				break
+
+			row = self.struct.unpack(row_str)
+			max_idx = max(row[0],max_idx)
+		return max_idx
+		
+	
 	def get_single_read_count(self, fpath):
 		if fpath != self.current_fpath:
 			self._index(fpath)
@@ -156,12 +176,14 @@ class ReadsWriterDat(object):
 		with open(self.fpath, 'wb') as f:
 			f.write(''.join(imap(itemgetter(1), self.reads)))
 
-class ReadsWriterDat(object):
+class ReadsWriterPredat(object):
 	def __init__(self, fpath):
 		self.fpath = fpath
-		self.struct = struct.Struct('<LL?L?')
-		self.reads = []
+		self.fmt = "{0:d}\t{1:d}\t{2:d}\t{3:d}\t{4:d}\n"
+	def __enter__(self):
+		self.f = open(self.fpath, 'wb')
 		self.idx = 0
+		return self
 	def write(self, posa, strda, posb, strdb):
 		rev_ca, rev_cb = False, False
 		if strda == '-':
@@ -169,16 +191,12 @@ class ReadsWriterDat(object):
 		if strdb == '-': 
 			rev_cb = True
 
-		self.reads.append((posa, self.struct.pack(self.idx, posa, rev_ca, posb, rev_cb)))
-		self.reads.append((posb, self.struct.pack(self.idx, posb, rev_cb, posa, rev_ca)))
+		self.f.write(self.fmt.format(self.idx, posa, rev_ca, posb, rev_cb))
+		self.f.write(self.fmt.format(self.idx, posb, rev_cb, posa, rev_ca))
 		self.idx += 1
 
-	def close(self):
-		self.reads.sort()
-		# print [x for x in imap(itemgetter(1), self.reads)]
-		with open(self.fpath, 'wb') as f:
-			f.write(''.join(imap(itemgetter(1), self.reads)))
-
+	def __exit__(self, tp, value, tb):
+		self.f.close()
 
 def test_dat_write():
 	temp_out = 'te.dat'

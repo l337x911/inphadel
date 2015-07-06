@@ -21,7 +21,7 @@ def convert(fq, index_start):
 	pecount = count(index_start)
 	for line in fq:
 		if not line.startswith('@'): continue
-		#E.g. header "@del-del-chr20_14470409_14470948_2:0:0_2:0:0_b/1" 
+		#E.g. header "@chr20_14470409_14470948_2:0:0_2:0:0_b/1" 
 		tokens = line[1:].strip().split(':')
 
 		# guessing that is num_of_error
