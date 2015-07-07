@@ -46,12 +46,12 @@ done;
 for c in chr2 chr3 chr4;
 do
 	echo "Simulating WGS reads for ${c}...";
-	if [ ! -f /root/data/sim_deletions_0_${count}/wgs/${c}.chromA.predat.gz ];
+	if [ ! -f /root/data/sim_deletions_0_${count}/wgs/${c}.A.dat ];
 	then 
 	bash simulation/wgsim.sh /root/data/NA12878_HG19_GS_0_1/wgs/all.stat /root/data/sim_deletions_0_${count}/truth/${c}.chromA.fa /root/data/sim_deletions_0_${count}/wgs -1;
 	fi
 
-	if [ ! -f /root/data/sim_deletions_0_${count}/wgs/${c}.chromB.predat.gz ];
+	if [ ! -f /root/data/sim_deletions_0_${count}/wgs/${c}.B.dat ];
 	then 
 	bash simulation/wgsim.sh /root/data/NA12878_HG19_GS_0_1/wgs/all.stat /root/data/sim_deletions_0_${count}/truth/${c}.chromB.fa /root/data/sim_deletions_0_${count}/wgs $(gzip -c -d /root/data/sim_deletions_0_${count}/wgs/${c}.chromA.predat.gz | tail -1 | cut -f 1);
 	fi
@@ -59,7 +59,7 @@ done;
 
 echo "Converting WGS reads to Ref...";
 # CONVERT TO ORIGINAL REFERENCE COORDINATES FIRST!
-if [ ! -f /root/data/sim_deletions_0_${count}/wgs/${c}.chromA.ref.predat.gz ]
+if [ ! -f /root/data/sim_deletions_0_${count}/wgs/chr2.chromA.ref.predat.gz ]
 then
 parallel -j ${threads}	bash simulation/convert_predat_to_ref.sh {1} wgs {2} ${count} ::: chr2 chr3 chr4 ::: chromA chromB;
 fi
@@ -79,49 +79,25 @@ parallel -j ${threads} rm ::: $(find /root/data/sim_deletions_0_${count}/wgs -na
 # HiC shuffle half the # of chrom mapped se reads found in the original hic/*.dat count_dat --se for chromA and chromB
 # HiC shuffle half the # of same chrom mapped pe reads found in the original hic/*.dat count_dat --pe for chromA and chromB
 # reassign se.chromA, pe.chromA, se.chromB,  pe.chromB, index 
-for c in chr2 chr3 chr4;
-do
-	tmpdir=$(mktemp -d -t inphadel.XXXX --tmpdir=/tmp/);
-	echo "Simulating HiC reads for ${c}...";
+parallel -j ${threads} bash simulation/hic.sh ${count} {1} ::: chr2 chr3 chr4;
 
-	if [ ! -f /root/data/sim_deletions_0_${count}/hic/${c}.chromA.predat.gz ];
-	then 
-	mkfifo ${tmpdir}/fifo1;
-
-	cat ${tmpdir}/fifo1 | gzip -c >/root/data/sim_deletions_0_${count}/hic/${c}.chromA.predat.gz &
-	python -m svphase.simulate.hic -r 100 -f 0.5 --debug ${c} /root/data/sim_deletions_0_${count}/truth/truth.A.bed /home/anand/data/hg/19/hg19.fa /root/data/sim_deletions_0_${count}/truth/${c}.chromA.fa /root/data/NA12878_HG19_GS_0_1/hic/${c}.all.dat ${tmpdir}/fifo1;
-	wait
-	rm ${tmpdir}/fifo1;
-	fi
-
-
-	if [ ! -f /root/data/sim_deletions_0_${count}/hic/${c}.chromB.predat.gz ];
-	then 
-	mkfifo ${tmpdir}/fifo2;
-	awk -v offset=$(gzip -c -d /root/data/sim_deletions_0_${count}/hic/${c}.chromA.predat.gz | tail -1 | cut -f 1) '{print $1+1+offset "\t" $2 "\t" $3 "\t" $4 "\t" $5;}' ${tmpdir}/fifo2 | gzip -c >/root/data/sim_deletions_0_${count}/hic/${c}.chromB.predat.gz &
-	python -m svphase.simulate.hic -r 100 -f 0.5 --debug ${c} /root/data/sim_deletions_0_${count}/truth/truth.B.bed /home/anand/data/hg/19/hg19.fa /root/data/sim_deletions_0_${count}/truth/${c}.chromB.fa /root/data/NA12878_HG19_GS_0_1/hic/${c}.all.dat ${tmpdir}/fifo2;
-	wait
-	rm ${tmpdir}/fifo2;
-	fi
-
-rmdir ${tmpdir};
-done;
-
-echo "Converting WGS reads to Ref...";
+echo "Converting HiC reads to Ref...";
 # CONVERT TO ORIGINAL REFERENCE COORDINATES FIRST!
-if [ ! -f /root/data/sim_deletions_0_${count}/hic/${c}.chromA.ref.predat.gz ]
+if [ ! -f /root/data/sim_deletions_0_${count}/hic/chr2.chromA.ref.predat.gz ]
 then
-parallel -j ${threads}	bash simulation/convert_predat_to_ref.sh {1} hic {2} ${count} ::: chr2 chr3 chr4 ::: chromA chromB;
+parallel -j ${threads} bash simulation/convert_predat_to_ref.sh {1} hic {2} ${count} ::: chr2 chr3 chr4 ::: chromA chromB;
 fi
 
-echo "Converting WGS reads to all.dat...";
+echo "Converting HiC reads to all.dat...";
 # merge chromA and chromB --> chrom.all.dat
 parallel -j ${threads} bash simulation/merge_to_all_dat.sh {1} hic ${count} ::: chr2 chr3 chr4;
 
-echo "Filtering WGS reads with overlap to VCF...";
+echo "Filtering HiC reads with overlap to VCF...";
 # filter chromA with vcf --> chrom.A.dat
 # filter chromB with vcf --> chrom.B.dat
 parallel -j ${threads} bash simulation/filter_predat_by_vcf.sh {1} hic {2} ${count} ::: chr2 chr3 chr4 ::: chromA chromB;
+
+python -m svphase.simulate.mkstats /root/data/NA12878_HG19_GS_0_1/ /root/data/sim_deletions_0_${count}
 
 parallel -j ${threads} rm ::: $(find /root/data/sim_deletions_0_${count}/hic -name "*.predat.gz")
 parallel -j ${threads} rm ::: $(find /root/data/sim_deletions_0_${count}/truth -name "*.fa")

@@ -9,7 +9,7 @@ s = struct.Struct('<LL?L?')
 def main(out):
 	env = dict(os.environ)
 	env['LC_ALL'] = 'C'
-	sort_cmd = 'sort -n -S 10G -k 2,2'
+	sort_cmd = 'sort -n -S 6G -k 2,2'
 	p = Popen(shlex.split(sort_cmd), stdout=PIPE, stdin=sys.stdin, env=env, bufsize=1) 
 
 	with p.stdout:
