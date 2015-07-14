@@ -6,7 +6,7 @@ Created on Jan 29, 2014
 import numpy as na
 import re
 
-from svphase.utils.config import CONTIG_POS_TYPE, CONTIG_TYPE_MAX, READLENGTH, REFERENCE_HG18, HIND3_STR
+from svphase.utils.config import CONTIG_POS_TYPE, CONTIG_TYPE_MAX, READLENGTH, REFERENCE_FASTA, HIND3_STR
 
 class Chromosome(object):
 	def __init__(self, ref_obj, contig):
@@ -163,7 +163,7 @@ def _get_contig_from_fpath(sv_fpath):
 def print_sv_cutsites(sv_fpath):
 	from svphase.utils import reference
 	contig = _get_contig_from_fpath(sv_fpath)
-	ref_obj = reference.Reference(REFERENCE_HG18%(contig))	
+	ref_obj = reference.Reference(REFERENCE_FASTA)	
 	#sv_fpath = '/home/anand/Projects/assembly/data/gm12878/del.chr20.bed'
 
 	chrom = Chromosome(ref_obj, contig)

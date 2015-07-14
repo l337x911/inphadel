@@ -21,7 +21,7 @@ then
 fi
 
 mkfifo ${outdir}/${chrom}_1.fq
-sed -n 1~4p ${outdir}/${chrom}_1.fq | python -m svphase.scripts.fq_to_predat ${index_start} | gzip 1>${outdir}/${chrom}.predat.gz &
+sed -n 1~4p ${outdir}/${chrom}_1.fq | python -m svphase.simulate.fq_to_predat ${index_start} | gzip 1>${outdir}/${chrom}.predat.gz &
 
 /home/anand/software/samtools-0.1.18/misc/wgsim -N ${template_count} -1 100 -2 100 ${fa} ${outdir}/${chrom}_1.fq /dev/null >${outdir}/${chrom}.out;
 sleep 5;

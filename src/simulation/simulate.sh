@@ -59,13 +59,11 @@ done;
 
 echo "Converting WGS reads to Ref...";
 # CONVERT TO ORIGINAL REFERENCE COORDINATES FIRST!
-if [ ! -f /root/data/sim_deletions_0_${count}/wgs/chr2.chromA.ref.predat.gz ]
-then
 parallel -j ${threads}	bash simulation/convert_predat_to_ref.sh {1} wgs {2} ${count} ::: chr2 chr3 chr4 ::: chromA chromB;
-fi
 
 echo "Converting WGS reads to all.dat...";
 # merge chromA and chromB --> chrom.all.dat
+
 parallel -j ${threads} bash simulation/merge_to_all_dat.sh {1} wgs ${count} ::: chr2 chr3 chr4;
 
 echo "Filtering WGS reads with overlap to VCF...";
@@ -73,20 +71,19 @@ echo "Filtering WGS reads with overlap to VCF...";
 # filter chromB with vcf --> chrom.B.dat
 parallel -j ${threads} bash simulation/filter_predat_by_vcf.sh {1} wgs {2} ${count} ::: chr2 chr3 chr4 ::: chromA chromB;
 
-parallel -j ${threads} rm ::: $(find /root/data/sim_deletions_0_${count}/wgs -name "*.predat.gz")
-parallel -j ${threads} rm ::: $(find /root/data/sim_deletions_0_${count}/wgs -name "*.out")
+#parallel -j ${threads} rm ::: $(find /root/data/sim_deletions_0_${count}/wgs -name "*.predat.gz")
+#parallel -j ${threads} rm ::: $(find /root/data/sim_deletions_0_${count}/wgs -name "*.out")
 
 # HiC shuffle half the # of chrom mapped se reads found in the original hic/*.dat count_dat --se for chromA and chromB
 # HiC shuffle half the # of same chrom mapped pe reads found in the original hic/*.dat count_dat --pe for chromA and chromB
 # reassign se.chromA, pe.chromA, se.chromB,  pe.chromB, index 
-parallel -j ${threads} bash simulation/hic.sh ${count} {1} ::: chr2 chr3 chr4;
+bash simulation/hic.sh ${count} chr2 
+bash simulation/hic.sh ${count} chr3 
+bash simulation/hic.sh ${count} chr4
 
 echo "Converting HiC reads to Ref...";
 # CONVERT TO ORIGINAL REFERENCE COORDINATES FIRST!
-if [ ! -f /root/data/sim_deletions_0_${count}/hic/chr2.chromA.ref.predat.gz ]
-then
 parallel -j ${threads} bash simulation/convert_predat_to_ref.sh {1} hic {2} ${count} ::: chr2 chr3 chr4 ::: chromA chromB;
-fi
 
 echo "Converting HiC reads to all.dat...";
 # merge chromA and chromB --> chrom.all.dat

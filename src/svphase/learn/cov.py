@@ -1,7 +1,7 @@
 """ Counts reads from a SAM or simplified binary files.
 """
 import pysam
-from svphase.utils.config import REFERENCE_HG18, HIND3_STR
+from svphase.utils.config import REFERENCE_FASTA, HIND3_STR
 from svphase.parser import ReadsParserSAM, ReadsParserDat
 from collections import defaultdict
 
@@ -75,7 +75,7 @@ class NearestCutSite(object):
 def test_ncutsites():
 	pos = [100000, 105000, 200000, 500000]
 	
-	finder = NearestCutSite(pysam.FastaFile(REFERENCE_HG18), 'chr20')
+	finder = NearestCutSite(pysam.FastaFile(REFERENCE_FASTA), 'chr20')
 
 	print "Test Above and Below"
 	for p in pos:
@@ -306,7 +306,7 @@ class Data(object):
 		self.row_index_header = ['data_type', 'allele', 'wtype', 'orient', 'orient1', 'orient2', 'dist']
 		self.prep_once_flag = False
 		if ref_fpath is None:
-			self.ref_fpath = REFERENCE_HG18
+			self.ref_fpath = REFERENCE_FASTA
 		else:
 			self.ref_fpath = ref_fpath
 		self.contig = contig

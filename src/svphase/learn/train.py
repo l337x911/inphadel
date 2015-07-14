@@ -290,7 +290,6 @@ def main():
 	parser = argparse.ArgumentParser(description=__doc__)
 	
 	default_arguments(parser)
-	parser.add_argument('version', help='version of training model generated')
 	parser.add_argument('ftype', help='file format for reads', choices=['bam','dat'])
 	# Sets the input file directories, model, reference, and debug
 	parser.add_argument('input_dirs', nargs='+', help='directories containing input hic bam, wgs bam, and idxstat files.')
