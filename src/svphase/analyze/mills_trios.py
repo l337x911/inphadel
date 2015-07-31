@@ -110,15 +110,15 @@ def algorithm_to_dels(approach, supp_csv_fpath, pm_to_m_map_fpath, m_sites_fpath
 		final['end'] = final['end'].astype(int)
 		final.to_csv(sys.stdout, header=False, index=False, sep='\t')
 
-hapmap_fmt = None
-vcf_fmt = None
+HAPMAP_FMT = None
+VCF_FMT = None
 
 def infer_transmit(m_sites, mids_s, off,pat,mat, somatic_flag=False, sort_flag=True): 
 	hom_idx = mids_s.index[(mids_s[off]+mids_s[pat]+mids_s[mat])==3]
 	hom_v = m_sites.ix[hom_idx,:]
 	hom_v['class'] = 'hom'
 
-	snp = SNPTransmit(pat,mat, hapmap_fmt, vcf_fmt)
+	snp = SNPTransmit(pat,mat, HAPMAP_FMT, VCF_FMT)
 	pat_idx = mids_s.index[na.logical_and((mids_s[off]+mids_s[pat])==2, mids_s[mat]==0)]
 	pat_v = m_sites.ix[pat_idx,:]
 	pat_v = snp.assign_dels_to_homolog(pat_v, 'pat')
@@ -157,8 +157,8 @@ if __name__ == '__main__':
 	parser.add_argument('--hets', default=False, action='store_true', help='Report only heterozygous deletions')
 
 	args = parser.parse_args()
-	vcf_fmt = args.vcf_fmt
-	hapmap_fmt = args.hapmap_fmt
+	VCF_FMT = args.vcf_fmt
+	HAPMAP_FMT = args.hapmap_fmt
 	algorithm_to_dels(args.algo, args.individual, args.pm_to_m, args.merged, all_dels=args.all_dels, hets_only=args.hets, somatic_flag=args.somatic)
 	#algorithm_to_dels(approach='max')
 	#algorithm_to_dels(all_dels=True, approach='any')

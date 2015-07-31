@@ -8,6 +8,7 @@ import pickle
 import argparse
 import warnings
 from itertools import chain, compress
+from operator import itemgetter
 from svphase.learn.cov import FileStructureData, RPKMAdaptor
 from svphase.learn.features import Features
 from svphase.scripts.sam_read_split import split_reads_by_allele
@@ -125,6 +126,7 @@ def default_arguments(parser):
 	#parser.add_argument('--test', dest='test', action='store_true', default=False, help='Run unit tests to ensure proper installation')
 	parser.add_argument('version', help='version of training model generated')
 	parser.add_argument('-r,--reference', dest='reference_fasta', default=None, help='path to reference fasta (defaults to reference in config.py)')
+	parser.add_argument('--simple-sum', dest='simple_sum', action='store_true', default=False, help='Computes simple sum features instead of all RPKM the default')
 	parser.add_argument('--debug', dest='debug', action='store_true', default=False, help=argparse.SUPPRESS)
 
 
@@ -160,8 +162,8 @@ def main():
 	if not os.path.isdir(os.path.join(input_dir, 'hic')):
 		logger.error('HiC directory not found: %s/hic', input_dir )
 		sys.exit(1)
-	if not (os.path.isfile(model) and model.endswith('.pkl')):
-		logger.error('Classifier model not found: %s', model)
+	if not (os.path.isfile(model_pkl) and model_pkl.endswith('.pkl')):
+		logger.error('Classifier model not found: %s', model_pkl)
 		sys.exit(1) 
 	
 	with open(sv_fpath, 'rb') as f:
@@ -188,7 +190,7 @@ def main():
 	hic_read_count = pd.read_csv(hic_stat_fpath, sep='\t', header=None, index_col=0).astype(int)
 
 	# Process for each contig
-	predr = Predictor(model)
+	predr = Predictor(model_pkl)
 	#print loci
 	for contig in loci.contig.unique():
 		if not os.path.isfile(os.path.join(input_dir, 'vcf', contig+'.vcf')):
@@ -200,7 +202,7 @@ def main():
 		d = FileStructureData(os.path.join(input_dir, 'wgs'), os.path.join(input_dir, 'hic'), sv_fpath, contig, file_fmt=args.ftype, ref_fpath=ref_fpath)
 
 		# Change in the future to per "contig" when models are trained that way
-		adaptor = RPKMAdaptor(fs.wgs_read_count.loc[contig,1], fs.hic_read_count.loc[contig,1])
+		adaptor = RPKMAdaptor(wgs_read_count.loc[contig,1], hic_read_count.loc[contig,1])
 		#adaptor = RPKMAdaptor(wgs_read_count.loc['chr19',1]+wgs_read_count.loc['chr20',1], hic_read_count.loc['chr19',1]+hic_read_count.loc['chr20',1])
 		
 		d.fill(adaptor=adaptor)
@@ -211,6 +213,16 @@ def main():
     
 		preds = predr.predict_log_proba()
 		preds = preds.sort_index().reset_index()
+		#preds.to_pickle(out_csv+'.pkl')
+
+		preds['contig'] = map(itemgetter(0), preds.ix[:,'index'])
+		preds['start'] = map(itemgetter(1), preds.ix[:,'index'])
+		preds.loc[:,'start'] = preds['start'].astype(int)
+		preds['end'] = map(itemgetter(2), preds.ix[:,'index'])
+		preds.loc[:,'end'] = preds['end'].astype(int)
+		
+		preds = preds.drop(['index',],axis=1)
+		preds = preds[list(preds.columns[-3:]) + list(preds.columns[:-3])]	
 
 		preds.to_csv(out_csv, sep='\t', float_format='%0.5f', index=False)
 		

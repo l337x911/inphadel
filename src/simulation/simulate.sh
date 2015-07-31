@@ -14,7 +14,8 @@ for c in chr2 chr3 chr4;
 do 
 if [ ! -f truth.${c}.bed ];
 then 
-	bash ~/Projects/inphadel-min/src/simulation/shuffle_deletions.sh ${c} ~/Projects/inphadel-min/data truth.${c}.bed; 
+	#bash ~/Projects/inphadel-min/src/simulation/shuffle_deletions.sh ${c} ~/Projects/inphadel-min/data truth.${c}.bed; 
+	bash ~/Projects/inphadel-min/src/simulation/shuffle_phase_deletions.sh ${c} ~/Projects/inphadel-min/data truth.${c}.bed; 
 fi
 done;
 

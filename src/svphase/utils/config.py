@@ -21,6 +21,9 @@ DATA_PREFIX = '/home/anand/T02/data/hic/'
 SV_DATA = '/home/anand/Projects/inphadel/data'
 TEST_DATA_PREFIX = '/home/anand/Projects/inphadel/abbrev_test'
 
+FONT = {'family': 'Liberation Sans', 'size': 14}
+COLORS = {'b': '#0000CD', 'both': '#9400D3', 'a': '#B22222', 'mis':0.4, 'bg':'0.9', 'cor':'0.7'}
+
 #def get_open_fds():
 #  '''
 #    return the number of open file descriptors for current process

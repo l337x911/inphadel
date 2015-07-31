@@ -9,7 +9,7 @@ import pickle
 import pandas as pd
 import numpy as np
 import warnings
-from itertools import chain
+from itertools import izip
 
 from sklearn import svm
 from sklearn import ensemble
@@ -18,12 +18,12 @@ from sklearn.grid_search import GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 
-
+from svphase.utils.common import logger
 from svphase.utils.config import RANDOM_STATE,DATA_PREFIX
 from svphase.learn.cov import FileStructureDataWithTruth, RPKMAdaptor
-from svphase.learn.features import Features, PreloadFeatures
-from svphase.utils.common import logger
-from svphase.inphadel import default_arguments, ClassLabel
+from svphase.learn.evaluation import Evaluation
+from svphase.learn.features import HicOnlySubset, WgsOnlySubset
+from svphase.inphadel import default_arguments
 
 class Model(object):
 	def __init__(self, model_pkl, random_state):
@@ -55,54 +55,17 @@ class KNNModel(Model):
 		self.clf = KNeighborsClassifier(n_neighbors=5, weights='uniform', algorithm='brute')
 		self.params = {'n_neighbors':[2,4,8,16,32]}
 
-class Trainer(object):
+
+class Trainer(Evaluation):
 	def __init__(self, k=5, feature_subset=None): 
-		self.data = []
-		self.feats = None
-		self.labels = None
+		Evaluation.__init__(self, feature_subset=feature_subset)
 		self.k = k
-		self.feature_subset = feature_subset		
 		self.inner_models = []
 		self.inner_accuracies = []
-		self.label_obj = ClassLabel()		
+		self._cpred_index =map(lambda x:'cpred:'+x,self.label_obj.classes)
+		self._tpred_index =map(lambda x:'tpred:'+x,self.label_obj.classes)
 
-	def add_data(self, data):
-		self.data.append(data)
-	def set_features(self, save_prefix=None, preload_prefix=None):
-		if not self.feats is None:
-			logger.warning('Reloading features')
 
-		if (not preload_prefix is None) and os.path.isfile(preload_prefix + ".pkl"):
-			logger.info("Using preloaded features.")
-			self.feats = PreloadFeatures(preload_prefix) 
-		else:
-			self.feats = Features(self.data, self.feature_subset)
-
-		feats = self.feats.get_features()
-		logger.info("Loaded samples: %d, features: %d", feats.shape[0], feats.shape[1])
-		feats = self.feats.get_nonzero_features()
-		logger.info("Non-zero samples: %d, features: %d", feats.shape[0], feats.shape[1])
-		if not save_prefix is None:
-			self.feats.save(save_prefix)
-
-	def set_labels(self, save_prefix=None, preload_prefix=None):
-		if not self.labels is None:
-			logger.warning('Reloading labels')
-		if self.feats is None:
-			logger.error('Truth labels need features to be loaded')
-			sys.exit(1)
-
-		if (not preload_prefix is None) and  os.path.isfile(preload_prefix + '.txt'):
-			with open(preload_prefix + '.txt', 'rb') as f:
-				self.labels = [line.strip() for line in f]
-		else:
-			self.labels = list(chain(*(d.truth for d in self.data)))
-			if not save_prefix is None:
-				with open(save_prefix+'.txt', 'wb') as f:
-					f.write('\n'.join(self.labels) + '\n')
-
-		logger.info("Loaded %d truth labels", len(self.labels))
-	
 	def check_stable(self, scores, common_params_df):
 		thresh = 0.10
 		deviation = max(scores)-min(scores)
@@ -113,24 +76,29 @@ class Trainer(object):
 		if len(common_params_df.index)>1:
 			logger.warning('Model had unstable parameters\n{len:s}'.format(len=common_params_df))
 
-	def _to_series(self, outer_fold, inner_fold, test_accuracy, params):
-		return pd.concat([pd.Series([outer_fold, inner_fold, test_accuracy], index=['outer_fold','inner_fold', 'test_accuracy']), pd.Series(params, dtype=int)])
+	def _to_series(self, outer_fold, inner_fold, test_accuracy, correct_preds, total_preds, params):
 
-	def manual_check(self):
-		pd.set_option('display.max_rows', 999)
-		pd.set_option('display.max_columns', 999)
-		pd.set_option('display.height', 999)
-		pd.set_option('display.width', 999)
-		data = self.feats.get_nonzero_features()
-		data = data.fillna(0).astype(np.float64)
-		labels_str = np.array(self.labels)[self.feats.get_nonzero()]
-		labels_int = map(self.label_obj.str_to_int_dict.get, labels_str)
-		label_str_idx = pd.MultiIndex.from_tuples([tuple(['truth_str',] + [np.nan,]*(len(data.columns.names)-1)),], names=data.columns.names)
-		label_int_idx = pd.MultiIndex.from_tuples([tuple(['truth_int',] + [np.nan,]*(len(data.columns.names)-1)),], names=data.columns.names)
+		if correct_preds is None:
+			c = pd.Series([0,]*len(self.label_obj.classes), index=self._cpred_index, dtype=int)
+		else:
+			c = pd.Series(correct_preds, index=self._cpred_index, dtype=int)
+		if total_preds is None:
+			t = pd.Series([0,]*len(self.label_obj.classes), index=self._tpred_index, dtype=int)
+		else:
+			t = pd.Series(total_preds, index=self._tpred_index, dtype=int)
 
-		inspect = pd.concat([pd.DataFrame(labels_str, index=data.index, columns=label_str_idx), pd.DataFrame(labels_int, index=data.index, columns=label_int_idx), data], names=data.columns.names, axis=1)
-		print inspect
-		#logger.info('\n%s', inspect)
+		return pd.concat([pd.Series([outer_fold, inner_fold, test_accuracy], index=['outer_fold','inner_fold', 'test_accuracy']), c,t,pd.Series(params, dtype=int)])
+
+	def _correct_preds_per_class(self, labels, preds):
+		# Expects labels, and preds to be in ints
+		cpreds = [0,]*len(self.label_obj.classes)
+		tpreds = [0,]*len(self.label_obj.classes)
+		
+		for l,p in izip(labels, preds):
+			tpreds[l] += 1
+			cpreds[l] += int(p==l)
+
+		return cpreds, tpreds
 
 	def train(self, model):
 		data = self.feats.get_nonzero_features()
@@ -160,25 +128,28 @@ class Trainer(object):
 			inner_skf = StratifiedKFold(train_label, n_folds=self.k, shuffle=True, random_state=model.random_state)
 			grid_clf = GridSearchCV(model.clf, param_grid=model.params, scoring='accuracy', n_jobs=-1, cv=inner_skf, refit=True, verbose=1)
 			grid_clf.fit(train_data, train_label)
-			
-			test_accuracy = accuracy_score(test_label, grid_clf.best_estimator_.predict(test_data))
+		
+			outer_predict = grid_clf.best_estimator_.predict(test_data)
+			test_accuracy = accuracy_score(test_label, outer_predict )
 			scores.append(test_accuracy)
-
+			cpreds, tpreds = self._correct_preds_per_class(test_label, outer_predict)			
 			#logger.debug('OUTER: %0.4f test accuracy on fold %d', test_accuracy, fold)
 			logger.info('OUTER: %0.4f test accuracy with params %s on fold %d', test_accuracy, grid_clf.best_params_, fold)
-			skf_stats.append(self._to_series(fold, None, test_accuracy, grid_clf.best_params_))
+			skf_stats.append(self._to_series(fold, None, test_accuracy, cpreds, tpreds, grid_clf.best_params_))
 			for pt in grid_clf.grid_scores_:
 				logger.info(' INNER: %.4f avg accuracy with params %s and scores %s', pt.mean_validation_score, pt.parameters, ','.join(map('{0:0.4f}'.format,pt.cv_validation_scores)))
 				for inner_fold, cv_score in enumerate(pt.cv_validation_scores):
-					skf_stats.append(self._to_series(fold, inner_fold, cv_score, pt.parameters))
+					skf_stats.append(self._to_series(fold, inner_fold, cv_score, None, None, pt.parameters))
 
 		skf_stats_df =  pd.concat(skf_stats, axis=1).T
-		param_cols = skf_stats_df.columns[3:]
+		param_cols = skf_stats_df.columns[3+2*len(self.label_obj.classes):]
+		pred_cols = skf_stats_df.columns[3:3+2*len(self.label_obj.classes)]
+		skf_stats_df[pred_cols] = skf_stats_df[pred_cols].astype(int)
 		skf_stats_df[param_cols] = skf_stats_df[param_cols].astype(int)
 		#skf_stats_df[['outer_fold','inner_fold']] = skf_stats_df[['outer_fold','inner_fold']].astype(int)
 
 		skf_stats_df.to_csv(model.pkl + '.stat', sep='\t', index=False, header=True, float_format="%0.4f") 
-		# Assumes skf_stats_df columns are outer_fold, inner_fold, accuracy, param1, param2, ...
+		# Assumes skf_stats_df columns are outer_fold, inner_fold, accuracy, cpreds:,tpreds:, param1, param2, ...
 		outer_params_df = skf_stats_df.ix[skf_stats_df['inner_fold'].isnull(),param_cols]
 		common_params = outer_params_df.groupby(list(outer_params_df.columns)).apply(len)
 		self.check_stable(scores, common_params)
@@ -295,6 +266,7 @@ def main():
 	parser.add_argument('input_dirs', nargs='+', help='directories containing input hic bam, wgs bam, and idxstat files.')
 
 	parser.add_argument('--seed', type=int, default=None, help='Random initial state for some training procedures')
+	parser.add_argument('--subset', type=str, default=None, choices=['hic-only','wgs-only'], help='Data-specific feature subset to use.')
 	parser.add_argument('-P', '--preload-features', dest='preload_feats', action='store_true', default=False, help='Preload features from disk. Fpath is derived from model/version')
 	parser.add_argument('-S', '--save-features', dest='save_feats', action='store_true', default=False, help='Save features to disk  for speed. Fpath is derived from model/version')
 	parser.add_argument('-k', type=int, default=5, help='# of folds in nested cross validation')	
@@ -317,8 +289,15 @@ def main():
 	save_prefix = feats_to_disk if args.save_feats else None
 	preload_prefix = feats_to_disk if args.preload_feats else None
 
+	if args.subset is None:
+		feature_subset = None
+	elif args.subset=='hic-only':
+		feature_subset = HicOnlySubset()
+	elif args.subset=='wgs-only':
+		feature_subset = WgsOnlySubset()
+
 	# Process for each contig
-	trainer = Trainer(k=args.k)
+	trainer = Trainer(k=args.k, feature_subset=feature_subset)
 	#print loci
 	for idir in args.input_dirs:	
 		fs = PrepTrainingFileStructure(idir, args.ftype)
@@ -335,7 +314,7 @@ def main():
 
 	#with warnings.catch_warnings():
 	#	warnings.simplefilter("ignore")
-	trainer.set_features(save_prefix=save_prefix, preload_prefix=preload_prefix)
+	trainer.set_features(save_prefix=save_prefix, preload_prefix=preload_prefix, simple_sum_flag=args.simple_sum)
 	trainer.set_labels(save_prefix=save_prefix, preload_prefix=preload_prefix)
 
 	if args.model=='svm':
