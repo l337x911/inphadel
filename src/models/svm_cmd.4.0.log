@@ -1,0 +1,104 @@
+2015-08-06 15:05:21,945 [     INFO] - Added data from contig chr1
+2015-08-06 15:05:21,946 [     INFO] - Added data from contig chr10
+2015-08-06 15:05:21,946 [     INFO] - Added data from contig chr11
+2015-08-06 15:05:21,947 [     INFO] - Added data from contig chr12
+2015-08-06 15:05:21,948 [     INFO] - Added data from contig chr13
+2015-08-06 15:05:21,948 [     INFO] - Added data from contig chr14
+2015-08-06 15:05:21,949 [     INFO] - Added data from contig chr15
+2015-08-06 15:05:21,949 [     INFO] - Added data from contig chr16
+2015-08-06 15:05:21,950 [     INFO] - Added data from contig chr17
+2015-08-06 15:05:21,951 [     INFO] - Added data from contig chr18
+2015-08-06 15:05:21,951 [     INFO] - Added data from contig chr19
+2015-08-06 15:05:21,952 [     INFO] - Added data from contig chr2
+2015-08-06 15:05:21,952 [     INFO] - Added data from contig chr20
+2015-08-06 15:05:21,953 [     INFO] - Added data from contig chr21
+2015-08-06 15:05:21,954 [     INFO] - Added data from contig chr22
+2015-08-06 15:05:21,954 [     INFO] - Added data from contig chr3
+2015-08-06 15:05:21,955 [     INFO] - Added data from contig chr4
+2015-08-06 15:05:21,956 [     INFO] - Added data from contig chr5
+2015-08-06 15:05:21,956 [     INFO] - Added data from contig chr6
+2015-08-06 15:05:21,957 [     INFO] - Added data from contig chr7
+2015-08-06 15:05:21,958 [     INFO] - Added data from contig chr8
+2015-08-06 15:05:21,958 [     INFO] - Added data from contig chr9
+2015-08-06 15:05:21,959 [     INFO] - Added data from contig chrX
+2015-08-06 15:05:21,959 [     INFO] - Using preloaded features.
+2015-08-06 15:05:21,960 [     INFO] - Loaded samples: 423, features: 32
+2015-08-06 15:05:21,992 [     INFO] - Non-zero samples: 320, features: 32
+2015-08-06 15:05:21,992 [     INFO] - Loaded 423 truth labels
+2015-08-06 15:05:21,993 [    DEBUG] - ['pB' 'pA' 'pB' 'hom' 'hom' 'pA' 'hom' 'hom' 'pB' 'pA' 'pA' 'hom' 'pB' 'pA'
+ 'hom' 'pB' 'pB' 'pB' 'pA' 'pB' 'hom' 'hom' 'pB' 'pA' 'hom' 'pA' 'hom' 'pA'
+ 'pB' 'pB' 'pA' 'pA' 'pB' 'hom' 'hom' 'hom' 'pB' 'pA' 'hom' 'pA' 'pA' 'pA'
+ 'pA' 'pA' 'pB' 'pB' 'hom' 'pA' 'pA' 'hom' 'pB' 'pB' 'pA' 'pA' 'pB' 'pB'
+ 'pB' 'hom' 'pB' 'pA' 'pA' 'pA' 'pB' 'pB' 'pB' 'hom' 'hom' 'pB' 'pB' 'pB'
+ 'pA' 'pB' 'pA' 'pB' 'pB' 'pA' 'pB' 'pB' 'pA' 'pA' 'pA' 'hom' 'pA' 'pA'
+ 'pA' 'pA' 'pA' 'pB' 'hom' 'pB' 'hom' 'pB' 'pA' 'pB' 'pA' 'pB' 'pB' 'pA'
+ 'hom' 'pB' 'pB' 'pB' 'pB' 'pB' 'pB' 'pA' 'pA' 'pA' 'pA' 'pB' 'hom' 'pA'
+ 'pA' 'pA' 'pB' 'pB' 'hom' 'pB' 'pA' 'pA' 'pA' 'pB' 'pB' 'pA' 'pB' 'pA'
+ 'pB' 'pA' 'hom' 'pB' 'pA' 'pB' 'pB' 'pB' 'pB' 'pB' 'pB' 'pB' 'pB' 'pA'
+ 'pB' 'pB' 'pB' 'pB' 'hom' 'pB' 'pB' 'hom' 'pA' 'pB' 'pA' 'pB' 'pB' 'pA'
+ 'hom' 'pA' 'pB' 'pA' 'hom' 'pB' 'pA' 'pA' 'pA' 'pA' 'pA' 'pA' 'pB' 'pA'
+ 'pA' 'hom' 'pA' 'pA' 'hom' 'pA' 'pB' 'pA' 'pA' 'pA' 'pA' 'pA' 'pB' 'pB'
+ 'pB' 'pB' 'pA' 'pB' 'hom' 'pA' 'hom' 'pB' 'pB' 'pB' 'pB' 'pB' 'pA' 'pB'
+ 'pB' 'hom' 'pB' 'pB' 'pB' 'pB' 'pA' 'pA' 'pB' 'pA' 'pA' 'pA' 'pA' 'pB'
+ 'hom' 'pB' 'hom' 'pA' 'pA' 'pB' 'pB' 'hom' 'pB' 'pA' 'pA' 'pB' 'pA' 'pA'
+ 'hom' 'pA' 'hom' 'pA' 'pA' 'hom' 'hom' 'pB' 'pB' 'hom' 'pA' 'hom' 'pB'
+ 'pB' 'hom' 'pB' 'pA' 'pA' 'pB' 'pA' 'pB' 'pA' 'pA' 'hom' 'pA' 'pA' 'pB'
+ 'pA' 'pB' 'pB' 'pA' 'pA' 'pB' 'pA' 'pA' 'hom' 'pB' 'pA' 'pB' 'pA' 'pA'
+ 'pA' 'pB' 'pA' 'pA' 'pA' 'pB' 'pB' 'pA' 'pA' 'hom' 'pB' 'pA' 'pB' 'pB'
+ 'pB' 'pA' 'pB' 'pB' 'pA' 'pB' 'pA' 'pA' 'pA' 'hom' 'pB' 'pB' 'pA' 'pB'
+ 'hom' 'pA' 'pB' 'pB' 'hom' 'pA' 'pA' 'hom' 'pA' 'pB' 'pB' 'pA' 'pB' 'pB'
+ 'pA' 'pA' 'pB' 'pB' 'pB' 'pA' 'pA' 'pA' 'pB' 'pB' 'pA' 'pA' 'pB']
+2015-08-06 15:05:21,993 [    DEBUG] - [1, 0, 1, 2, 2, 0, 2, 2, 1, 0, 0, 2, 1, 0, 2, 1, 1, 1, 0, 1, 2, 2, 1, 0, 2, 0, 2, 0, 1, 1, 0, 0, 1, 2, 2, 2, 1, 0, 2, 0, 0, 0, 0, 0, 1, 1, 2, 0, 0, 2, 1, 1, 0, 0, 1, 1, 1, 2, 1, 0, 0, 0, 1, 1, 1, 2, 2, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 2, 1, 2, 1, 0, 1, 0, 1, 1, 0, 2, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 2, 0, 0, 0, 1, 1, 2, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 2, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 2, 1, 1, 2, 0, 1, 0, 1, 1, 0, 2, 0, 1, 0, 2, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 2, 0, 2, 1, 1, 1, 1, 1, 0, 1, 1, 2, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 2, 1, 2, 0, 0, 1, 1, 2, 1, 0, 0, 1, 0, 0, 2, 0, 2, 0, 0, 2, 2, 1, 1, 2, 0, 2, 1, 1, 2, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 2, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 2, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 2, 1, 1, 0, 1, 2, 0, 1, 1, 2, 0, 0, 2, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1]
+2015-08-06 15:05:21,993 [    DEBUG] - [1 0 1 2 2 0 2 2 1 0 0 2 1 0 2 1 1 1 0 1 2 2 1 0 2 0 2 0 1 1 0 0 1 2 2 2 1
+ 0 2 0 0 0 0 0 1 1 2 0 0 2 1 1 0 0 1 1 1 2 1 0 0 0 1 1 1 2 2 1 1 1 0 1 0 1
+ 1 0 1 1 0 0 0 2 0 0 0 0 0 1 2 1 2 1 0 1 0 1 1 0 2 1 1 1 1 1 1 0 0 0 0 1 2
+ 0 0 0 1 1 2 1 0 0 0 1 1 0 1 0 1 0 2 1 0 1 1 1 1 1 1 1 1 0 1 1 1 1 2 1 1 2
+ 0 1 0 1 1 0 2 0 1 0 2 1 0 0 0 0 0 0 1 0 0 2 0 0 2 0 1 0 0 0 0 0 1 1 1 1 0
+ 1 2 0 2 1 1 1 1 1 0 1 1 2 1 1 1 1 0 0 1 0 0 0 0 1 2 1 2 0 0 1 1 2 1 0 0 1
+ 0 0 2 0 2 0 0 2 2 1 1 2 0 2 1 1 2 1 0 0 1 0 1 0 0 2 0 0 1 0 1 1 0 0 1 0 0
+ 2 1 0 1 0 0 0 1 0 0 0 1 1 0 0 2 1 0 1 1 1 0 1 1 0 1 0 0 0 2 1 1 0 1 2 0 1
+ 1 2 0 0 2 0 1 1 0 1 1 0 0 1 1 1 0 0 0 1 1 0 0 1]
+2015-08-06 15:05:21,995 [    DEBUG] - Data shape (320, 32), label shape (320,)
+2015-08-06 15:05:21,995 [    DEBUG] - Train shape (255,), test shape (65,)
+2015-08-06 15:05:21,995 [    DEBUG] - Train Data shape (255, 32), Train Label shape (255,)
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+2015-08-06 15:05:22,362 [     INFO] - OUTER: 0.8154 test accuracy with params {'C': 100} on fold 0
+2015-08-06 15:05:22,363 [     INFO] -  INNER: 0.4980 avg accuracy with params {'C': 0.1} and scores 0.5094,0.4314,0.5294,0.4800,0.5400
+2015-08-06 15:05:22,366 [     INFO] -  INNER: 0.5725 avg accuracy with params {'C': 1} and scores 0.5472,0.5294,0.5686,0.5600,0.6600
+2015-08-06 15:05:22,368 [     INFO] -  INNER: 0.7059 avg accuracy with params {'C': 10} and scores 0.7170,0.6863,0.6863,0.7200,0.7200
+2015-08-06 15:05:22,370 [     INFO] -  INNER: 0.7608 avg accuracy with params {'C': 100} and scores 0.7358,0.7843,0.7451,0.7800,0.7600
+2015-08-06 15:05:22,373 [    DEBUG] - Train shape (255,), test shape (65,)
+2015-08-06 15:05:22,373 [    DEBUG] - Train Data shape (255, 32), Train Label shape (255,)
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+2015-08-06 15:05:22,683 [     INFO] - OUTER: 0.7231 test accuracy with params {'C': 100} on fold 1
+2015-08-06 15:05:22,684 [     INFO] -  INNER: 0.5725 avg accuracy with params {'C': 0.1} and scores 0.5660,0.5098,0.5294,0.6000,0.6600
+2015-08-06 15:05:22,687 [     INFO] -  INNER: 0.6314 avg accuracy with params {'C': 1} and scores 0.5849,0.5882,0.6078,0.6400,0.7400
+2015-08-06 15:05:22,689 [     INFO] -  INNER: 0.7098 avg accuracy with params {'C': 10} and scores 0.6604,0.7059,0.6078,0.7000,0.8800
+2015-08-06 15:05:22,691 [     INFO] -  INNER: 0.8039 avg accuracy with params {'C': 100} and scores 0.7358,0.7843,0.7255,0.8600,0.9200
+2015-08-06 15:05:22,694 [    DEBUG] - Train shape (256,), test shape (64,)
+2015-08-06 15:05:22,694 [    DEBUG] - Train Data shape (256, 32), Train Label shape (256,)
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+2015-08-06 15:05:23,138 [     INFO] - OUTER: 0.8281 test accuracy with params {'C': 100} on fold 2
+2015-08-06 15:05:23,139 [     INFO] -  INNER: 0.5664 avg accuracy with params {'C': 0.1} and scores 0.5283,0.6538,0.4902,0.5600,0.6000
+2015-08-06 15:05:23,141 [     INFO] -  INNER: 0.5977 avg accuracy with params {'C': 1} and scores 0.4906,0.6923,0.5686,0.6200,0.6200
+2015-08-06 15:05:23,144 [     INFO] -  INNER: 0.6875 avg accuracy with params {'C': 10} and scores 0.5283,0.8077,0.7059,0.6400,0.7600
+2015-08-06 15:05:23,146 [     INFO] -  INNER: 0.8164 avg accuracy with params {'C': 100} and scores 0.6981,0.9231,0.8039,0.8000,0.8600
+2015-08-06 15:05:23,149 [    DEBUG] - Train shape (257,), test shape (63,)
+2015-08-06 15:05:23,149 [    DEBUG] - Train Data shape (257, 32), Train Label shape (257,)
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+2015-08-06 15:05:23,470 [     INFO] - OUTER: 0.8095 test accuracy with params {'C': 100} on fold 3
+2015-08-06 15:05:23,471 [     INFO] -  INNER: 0.5370 avg accuracy with params {'C': 0.1} and scores 0.5472,0.5472,0.5882,0.5400,0.4600
+2015-08-06 15:05:23,473 [     INFO] -  INNER: 0.6187 avg accuracy with params {'C': 1} and scores 0.6415,0.6415,0.6667,0.6600,0.4800
+2015-08-06 15:05:23,476 [     INFO] -  INNER: 0.6965 avg accuracy with params {'C': 10} and scores 0.7170,0.6792,0.7255,0.7400,0.6200
+2015-08-06 15:05:23,478 [     INFO] -  INNER: 0.7977 avg accuracy with params {'C': 100} and scores 0.7736,0.7736,0.8431,0.8200,0.7800
+2015-08-06 15:05:23,481 [    DEBUG] - Train shape (257,), test shape (63,)
+2015-08-06 15:05:23,481 [    DEBUG] - Train Data shape (257, 32), Train Label shape (257,)
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+2015-08-06 15:05:23,907 [     INFO] - OUTER: 0.8254 test accuracy with params {'C': 100} on fold 4
+2015-08-06 15:05:23,908 [     INFO] -  INNER: 0.5370 avg accuracy with params {'C': 0.1} and scores 0.5849,0.4717,0.5098,0.5400,0.5800
+2015-08-06 15:05:23,910 [     INFO] -  INNER: 0.6226 avg accuracy with params {'C': 1} and scores 0.7170,0.5094,0.6471,0.6400,0.6000
+2015-08-06 15:05:23,913 [     INFO] -  INNER: 0.6770 avg accuracy with params {'C': 10} and scores 0.7358,0.6415,0.7059,0.6800,0.6200
+2015-08-06 15:05:23,915 [     INFO] -  INNER: 0.7782 avg accuracy with params {'C': 100} and scores 0.8302,0.7170,0.8431,0.7800,0.7200
+2015-08-06 15:05:23,929 [  WARNING] - Model test accuracies deviate more than 10.0%, Deviation 0.1050
+2015-08-06 15:05:23,929 [     INFO] - Final Params {'C': 100}
+2015-08-06 15:05:24,058 [     INFO] - Final accuracy: 0.8594 with params {'C': 100}

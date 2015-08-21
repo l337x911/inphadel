@@ -1,0 +1,52 @@
+2015-07-14 15:14:31,466 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:31,466 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:31,467 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:31,469 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:31,470 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:31,470 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:31,473 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:31,473 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:31,473 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:31,476 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:31,477 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:31,477 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:31,480 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:31,480 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:31,481 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:31,483 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:31,484 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:31,484 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:31,487 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:31,487 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:31,488 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:31,488 [     INFO] - Using preloaded features.
+2015-07-14 15:14:31,489 [     INFO] - Loaded samples: 1050, features: 32
+2015-07-14 15:14:31,519 [     INFO] - Non-zero samples: 879, features: 32
+2015-07-14 15:14:31,519 [     INFO] - Loaded 1050 truth labels
+Fitting 5 folds for each of 3 candidates, totalling 15 fits
+2015-07-14 15:14:31,827 [     INFO] - OUTER: 0.9266 test accuracy with params {'C': 100} on fold 0
+2015-07-14 15:14:31,828 [     INFO] -  INNER: 0.8248 avg accuracy with params {'C': 1} and scores 0.8239,0.8227,0.7730,0.8500,0.8551
+2015-07-14 15:14:31,830 [     INFO] -  INNER: 0.8846 avg accuracy with params {'C': 10} and scores 0.8662,0.9078,0.8511,0.8929,0.9058
+2015-07-14 15:14:31,831 [     INFO] -  INNER: 0.9345 avg accuracy with params {'C': 100} and scores 0.9085,0.9504,0.9220,0.9286,0.9638
+Fitting 5 folds for each of 3 candidates, totalling 15 fits
+2015-07-14 15:14:32,134 [     INFO] - OUTER: 0.9661 test accuracy with params {'C': 100} on fold 1
+2015-07-14 15:14:32,135 [     INFO] -  INNER: 0.8305 avg accuracy with params {'C': 1} and scores 0.8169,0.8440,0.8298,0.8286,0.8333
+2015-07-14 15:14:32,136 [     INFO] -  INNER: 0.8789 avg accuracy with params {'C': 10} and scores 0.8732,0.8723,0.8723,0.8857,0.8913
+2015-07-14 15:14:32,137 [     INFO] -  INNER: 0.9145 avg accuracy with params {'C': 100} and scores 0.9296,0.9220,0.8936,0.9071,0.9203
+Fitting 5 folds for each of 3 candidates, totalling 15 fits
+2015-07-14 15:14:32,445 [     INFO] - OUTER: 0.9261 test accuracy with params {'C': 100} on fold 2
+2015-07-14 15:14:32,446 [     INFO] -  INNER: 0.8236 avg accuracy with params {'C': 1} and scores 0.7887,0.8511,0.7943,0.8227,0.8623
+2015-07-14 15:14:32,447 [     INFO] -  INNER: 0.8834 avg accuracy with params {'C': 10} and scores 0.8803,0.8794,0.8511,0.8936,0.9130
+2015-07-14 15:14:32,449 [     INFO] -  INNER: 0.9374 avg accuracy with params {'C': 100} and scores 0.9366,0.9362,0.9078,0.9645,0.9420
+Fitting 5 folds for each of 3 candidates, totalling 15 fits
+2015-07-14 15:14:32,745 [     INFO] - OUTER: 0.9375 test accuracy with params {'C': 100} on fold 3
+2015-07-14 15:14:32,746 [     INFO] -  INNER: 0.8421 avg accuracy with params {'C': 1} and scores 0.7817,0.8369,0.8227,0.8936,0.8768
+2015-07-14 15:14:32,748 [     INFO] -  INNER: 0.8990 avg accuracy with params {'C': 10} and scores 0.8592,0.9149,0.8652,0.9291,0.9275
+2015-07-14 15:14:32,749 [     INFO] -  INNER: 0.9474 avg accuracy with params {'C': 100} and scores 0.9437,0.9645,0.9007,0.9645,0.9638
+Fitting 5 folds for each of 3 candidates, totalling 15 fits
+2015-07-14 15:14:33,059 [     INFO] - OUTER: 0.9306 test accuracy with params {'C': 100} on fold 4
+2015-07-14 15:14:33,060 [     INFO] -  INNER: 0.8244 avg accuracy with params {'C': 1} and scores 0.8803,0.7746,0.8014,0.8511,0.8143
+2015-07-14 15:14:33,061 [     INFO] -  INNER: 0.8824 avg accuracy with params {'C': 10} and scores 0.9225,0.8310,0.8440,0.9504,0.8643
+2015-07-14 15:14:33,063 [     INFO] -  INNER: 0.9348 avg accuracy with params {'C': 100} and scores 0.9577,0.9296,0.9078,0.9716,0.9071
+2015-07-14 15:14:33,071 [     INFO] - Final Params {'C': 100}
+2015-07-14 15:14:33,164 [     INFO] - Final accuracy: 0.9511 with params {'C': 100}

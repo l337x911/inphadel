@@ -1,0 +1,128 @@
+2015-07-20 13:30:26,204 [     INFO] - Added data from contig chr2
+2015-07-20 13:30:26,204 [     INFO] - Added data from contig chr3
+2015-07-20 13:30:26,205 [     INFO] - Added data from contig chr4
+2015-07-20 13:30:26,208 [     INFO] - Added data from contig chr2
+2015-07-20 13:30:26,209 [     INFO] - Added data from contig chr3
+2015-07-20 13:30:26,209 [     INFO] - Added data from contig chr4
+2015-07-20 13:30:26,212 [     INFO] - Added data from contig chr2
+2015-07-20 13:30:26,213 [     INFO] - Added data from contig chr3
+2015-07-20 13:30:26,213 [     INFO] - Added data from contig chr4
+2015-07-20 13:30:26,217 [     INFO] - Added data from contig chr2
+2015-07-20 13:30:26,217 [     INFO] - Added data from contig chr3
+2015-07-20 13:30:26,218 [     INFO] - Added data from contig chr4
+2015-07-20 13:30:26,221 [     INFO] - Added data from contig chr2
+2015-07-20 13:30:26,222 [     INFO] - Added data from contig chr3
+2015-07-20 13:30:26,222 [     INFO] - Added data from contig chr4
+2015-07-20 13:30:26,225 [     INFO] - Added data from contig chr2
+2015-07-20 13:30:26,226 [     INFO] - Added data from contig chr3
+2015-07-20 13:30:26,226 [     INFO] - Added data from contig chr4
+2015-07-20 13:30:26,230 [     INFO] - Added data from contig chr2
+2015-07-20 13:30:26,230 [     INFO] - Added data from contig chr3
+2015-07-20 13:30:26,231 [     INFO] - Added data from contig chr4
+2015-07-20 13:30:26,234 [     INFO] - Added data from contig chr2
+2015-07-20 13:30:26,235 [     INFO] - Added data from contig chr3
+2015-07-20 13:30:26,235 [     INFO] - Added data from contig chr4
+2015-07-20 13:30:26,235 [     INFO] - Using preloaded features.
+2015-07-20 13:30:26,252 [     INFO] - Loaded samples: 1149, features: 32
+2015-07-20 13:30:26,296 [     INFO] - Non-zero samples: 956, features: 32
+2015-07-20 13:30:26,296 [     INFO] - Loaded 1149 truth labels
+Fitting 5 folds for each of 16 candidates, totalling 80 fits
+2015-07-20 13:30:27,478 [     INFO] - OUTER: 0.9430 test accuracy with params {'n_estimators': 20, 'max_depth': 10} on fold 0
+2015-07-20 13:30:27,479 [     INFO] -  INNER: 0.8467 avg accuracy with params {'n_estimators': 10, 'max_depth': 2} and scores 0.8442,0.8312,0.8758,0.8411,0.8411
+2015-07-20 13:30:27,481 [     INFO] -  INNER: 0.8191 avg accuracy with params {'n_estimators': 20, 'max_depth': 2} and scores 0.7922,0.8247,0.8366,0.8146,0.8278
+2015-07-20 13:30:27,484 [     INFO] -  INNER: 0.8952 avg accuracy with params {'n_estimators': 50, 'max_depth': 2} and scores 0.8896,0.8896,0.8954,0.8874,0.9139
+2015-07-20 13:30:27,487 [     INFO] -  INNER: 0.9083 avg accuracy with params {'n_estimators': 100, 'max_depth': 2} and scores 0.8896,0.8766,0.9216,0.9338,0.9205
+2015-07-20 13:30:27,489 [     INFO] -  INNER: 0.9174 avg accuracy with params {'n_estimators': 10, 'max_depth': 5} and scores 0.9351,0.8831,0.9085,0.9272,0.9338
+2015-07-20 13:30:27,492 [     INFO] -  INNER: 0.9436 avg accuracy with params {'n_estimators': 20, 'max_depth': 5} and scores 0.9416,0.9221,0.9477,0.9735,0.9338
+2015-07-20 13:30:27,494 [     INFO] -  INNER: 0.9541 avg accuracy with params {'n_estimators': 50, 'max_depth': 5} and scores 0.9675,0.9351,0.9673,0.9536,0.9470
+2015-07-20 13:30:27,497 [     INFO] -  INNER: 0.9515 avg accuracy with params {'n_estimators': 100, 'max_depth': 5} and scores 0.9675,0.9286,0.9542,0.9603,0.9470
+2015-07-20 13:30:27,499 [     INFO] -  INNER: 0.9489 avg accuracy with params {'n_estimators': 10, 'max_depth': 10} and scores 0.9481,0.9481,0.9477,0.9470,0.9536
+2015-07-20 13:30:27,501 [     INFO] -  INNER: 0.9581 avg accuracy with params {'n_estimators': 20, 'max_depth': 10} and scores 0.9805,0.9481,0.9542,0.9603,0.9470
+2015-07-20 13:30:27,504 [     INFO] -  INNER: 0.9554 avg accuracy with params {'n_estimators': 50, 'max_depth': 10} and scores 0.9610,0.9610,0.9542,0.9536,0.9470
+2015-07-20 13:30:27,506 [     INFO] -  INNER: 0.9567 avg accuracy with params {'n_estimators': 100, 'max_depth': 10} and scores 0.9675,0.9545,0.9477,0.9669,0.9470
+2015-07-20 13:30:27,509 [     INFO] -  INNER: 0.9450 avg accuracy with params {'n_estimators': 10, 'max_depth': 20} and scores 0.9610,0.9416,0.9346,0.9470,0.9404
+2015-07-20 13:30:27,511 [     INFO] -  INNER: 0.9528 avg accuracy with params {'n_estimators': 20, 'max_depth': 20} and scores 0.9481,0.9545,0.9542,0.9470,0.9603
+2015-07-20 13:30:27,514 [     INFO] -  INNER: 0.9554 avg accuracy with params {'n_estimators': 50, 'max_depth': 20} and scores 0.9740,0.9416,0.9608,0.9536,0.9470
+2015-07-20 13:30:27,516 [     INFO] -  INNER: 0.9554 avg accuracy with params {'n_estimators': 100, 'max_depth': 20} and scores 0.9675,0.9286,0.9477,0.9669,0.9669
+Fitting 5 folds for each of 16 candidates, totalling 80 fits
+2015-07-20 13:30:28,742 [     INFO] - OUTER: 0.9635 test accuracy with params {'n_estimators': 50, 'max_depth': 10} on fold 1
+2015-07-20 13:30:28,743 [     INFO] -  INNER: 0.8285 avg accuracy with params {'n_estimators': 10, 'max_depth': 2} and scores 0.7857,0.8442,0.8235,0.8421,0.8477
+2015-07-20 13:30:28,746 [     INFO] -  INNER: 0.8521 avg accuracy with params {'n_estimators': 20, 'max_depth': 2} and scores 0.8117,0.8831,0.8235,0.8882,0.8543
+2015-07-20 13:30:28,748 [     INFO] -  INNER: 0.8874 avg accuracy with params {'n_estimators': 50, 'max_depth': 2} and scores 0.8571,0.9156,0.8758,0.8553,0.9338
+2015-07-20 13:30:28,750 [     INFO] -  INNER: 0.8639 avg accuracy with params {'n_estimators': 100, 'max_depth': 2} and scores 0.8506,0.8896,0.8693,0.8355,0.8742
+2015-07-20 13:30:28,753 [     INFO] -  INNER: 0.9306 avg accuracy with params {'n_estimators': 10, 'max_depth': 5} and scores 0.9156,0.9610,0.9085,0.9211,0.9470
+2015-07-20 13:30:28,755 [     INFO] -  INNER: 0.9503 avg accuracy with params {'n_estimators': 20, 'max_depth': 5} and scores 0.9481,0.9675,0.9346,0.9342,0.9669
+2015-07-20 13:30:28,758 [     INFO] -  INNER: 0.9476 avg accuracy with params {'n_estimators': 50, 'max_depth': 5} and scores 0.9416,0.9610,0.9542,0.9342,0.9470
+2015-07-20 13:30:28,760 [     INFO] -  INNER: 0.9516 avg accuracy with params {'n_estimators': 100, 'max_depth': 5} and scores 0.9481,0.9675,0.9542,0.9342,0.9536
+2015-07-20 13:30:28,762 [     INFO] -  INNER: 0.9490 avg accuracy with params {'n_estimators': 10, 'max_depth': 10} and scores 0.9545,0.9481,0.9477,0.9211,0.9735
+2015-07-20 13:30:28,765 [     INFO] -  INNER: 0.9542 avg accuracy with params {'n_estimators': 20, 'max_depth': 10} and scores 0.9351,0.9740,0.9477,0.9605,0.9536
+2015-07-20 13:30:28,768 [     INFO] -  INNER: 0.9594 avg accuracy with params {'n_estimators': 50, 'max_depth': 10} and scores 0.9610,0.9805,0.9542,0.9408,0.9603
+2015-07-20 13:30:28,770 [     INFO] -  INNER: 0.9594 avg accuracy with params {'n_estimators': 100, 'max_depth': 10} and scores 0.9545,0.9740,0.9542,0.9539,0.9603
+2015-07-20 13:30:28,773 [     INFO] -  INNER: 0.9398 avg accuracy with params {'n_estimators': 10, 'max_depth': 20} and scores 0.9610,0.9351,0.9085,0.9276,0.9669
+2015-07-20 13:30:28,775 [     INFO] -  INNER: 0.9516 avg accuracy with params {'n_estimators': 20, 'max_depth': 20} and scores 0.9351,0.9740,0.9477,0.9408,0.9603
+2015-07-20 13:30:28,778 [     INFO] -  INNER: 0.9594 avg accuracy with params {'n_estimators': 50, 'max_depth': 20} and scores 0.9610,0.9675,0.9477,0.9474,0.9735
+2015-07-20 13:30:28,781 [     INFO] -  INNER: 0.9594 avg accuracy with params {'n_estimators': 100, 'max_depth': 20} and scores 0.9610,0.9675,0.9542,0.9539,0.9603
+Fitting 5 folds for each of 16 candidates, totalling 80 fits
+2015-07-20 13:30:30,090 [     INFO] - OUTER: 0.9583 test accuracy with params {'n_estimators': 100, 'max_depth': 20} on fold 2
+2015-07-20 13:30:30,091 [     INFO] -  INNER: 0.8272 avg accuracy with params {'n_estimators': 10, 'max_depth': 2} and scores 0.7597,0.8506,0.9085,0.7763,0.8411
+2015-07-20 13:30:30,094 [     INFO] -  INNER: 0.8482 avg accuracy with params {'n_estimators': 20, 'max_depth': 2} and scores 0.7662,0.8896,0.9150,0.8421,0.8278
+2015-07-20 13:30:30,096 [     INFO] -  INNER: 0.8455 avg accuracy with params {'n_estimators': 50, 'max_depth': 2} and scores 0.8117,0.8701,0.8627,0.8289,0.8543
+2015-07-20 13:30:30,099 [     INFO] -  INNER: 0.8586 avg accuracy with params {'n_estimators': 100, 'max_depth': 2} and scores 0.8571,0.8506,0.8693,0.8553,0.8609
+2015-07-20 13:30:30,101 [     INFO] -  INNER: 0.9463 avg accuracy with params {'n_estimators': 10, 'max_depth': 5} and scores 0.9481,0.9610,0.9608,0.9474,0.9139
+2015-07-20 13:30:30,104 [     INFO] -  INNER: 0.9516 avg accuracy with params {'n_estimators': 20, 'max_depth': 5} and scores 0.9481,0.9481,0.9477,0.9737,0.9404
+2015-07-20 13:30:30,106 [     INFO] -  INNER: 0.9542 avg accuracy with params {'n_estimators': 50, 'max_depth': 5} and scores 0.9351,0.9545,0.9542,0.9737,0.9536
+2015-07-20 13:30:30,109 [     INFO] -  INNER: 0.9581 avg accuracy with params {'n_estimators': 100, 'max_depth': 5} and scores 0.9545,0.9610,0.9542,0.9737,0.9470
+2015-07-20 13:30:30,112 [     INFO] -  INNER: 0.9424 avg accuracy with params {'n_estimators': 10, 'max_depth': 10} and scores 0.9351,0.9481,0.9542,0.9539,0.9205
+2015-07-20 13:30:30,114 [     INFO] -  INNER: 0.9476 avg accuracy with params {'n_estimators': 20, 'max_depth': 10} and scores 0.9351,0.9610,0.9542,0.9539,0.9338
+2015-07-20 13:30:30,116 [     INFO] -  INNER: 0.9529 avg accuracy with params {'n_estimators': 50, 'max_depth': 10} and scores 0.9545,0.9545,0.9542,0.9539,0.9470
+2015-07-20 13:30:30,119 [     INFO] -  INNER: 0.9542 avg accuracy with params {'n_estimators': 100, 'max_depth': 10} and scores 0.9481,0.9545,0.9542,0.9671,0.9470
+2015-07-20 13:30:30,121 [     INFO] -  INNER: 0.9450 avg accuracy with params {'n_estimators': 10, 'max_depth': 20} and scores 0.9351,0.9481,0.9542,0.9605,0.9272
+2015-07-20 13:30:30,124 [     INFO] -  INNER: 0.9476 avg accuracy with params {'n_estimators': 20, 'max_depth': 20} and scores 0.9156,0.9481,0.9542,0.9671,0.9536
+2015-07-20 13:30:30,126 [     INFO] -  INNER: 0.9568 avg accuracy with params {'n_estimators': 50, 'max_depth': 20} and scores 0.9675,0.9545,0.9542,0.9737,0.9338
+2015-07-20 13:30:30,129 [     INFO] -  INNER: 0.9607 avg accuracy with params {'n_estimators': 100, 'max_depth': 20} and scores 0.9610,0.9675,0.9542,0.9737,0.9470
+Fitting 5 folds for each of 16 candidates, totalling 80 fits
+2015-07-20 13:30:31,458 [     INFO] - OUTER: 0.9684 test accuracy with params {'n_estimators': 100, 'max_depth': 10} on fold 3
+2015-07-20 13:30:31,459 [     INFO] -  INNER: 0.7611 avg accuracy with params {'n_estimators': 10, 'max_depth': 2} and scores 0.7484,0.8117,0.8170,0.7190,0.7086
+2015-07-20 13:30:31,462 [     INFO] -  INNER: 0.8564 avg accuracy with params {'n_estimators': 20, 'max_depth': 2} and scores 0.8645,0.8701,0.9216,0.8366,0.7881
+2015-07-20 13:30:31,464 [     INFO] -  INNER: 0.8877 avg accuracy with params {'n_estimators': 50, 'max_depth': 2} and scores 0.9226,0.8896,0.9412,0.8497,0.8344
+2015-07-20 13:30:31,467 [     INFO] -  INNER: 0.8890 avg accuracy with params {'n_estimators': 100, 'max_depth': 2} and scores 0.9290,0.9156,0.9346,0.8301,0.8344
+2015-07-20 13:30:31,469 [     INFO] -  INNER: 0.9439 avg accuracy with params {'n_estimators': 10, 'max_depth': 5} and scores 0.9484,0.9675,0.9412,0.9477,0.9139
+2015-07-20 13:30:31,472 [     INFO] -  INNER: 0.9399 avg accuracy with params {'n_estimators': 20, 'max_depth': 5} and scores 0.9548,0.9610,0.9673,0.9281,0.8874
+2015-07-20 13:30:31,474 [     INFO] -  INNER: 0.9595 avg accuracy with params {'n_estimators': 50, 'max_depth': 5} and scores 0.9742,0.9675,0.9804,0.9542,0.9205
+2015-07-20 13:30:31,477 [     INFO] -  INNER: 0.9595 avg accuracy with params {'n_estimators': 100, 'max_depth': 5} and scores 0.9677,0.9740,0.9804,0.9542,0.9205
+2015-07-20 13:30:31,479 [     INFO] -  INNER: 0.9465 avg accuracy with params {'n_estimators': 10, 'max_depth': 10} and scores 0.9484,0.9610,0.9542,0.9477,0.9205
+2015-07-20 13:30:31,482 [     INFO] -  INNER: 0.9595 avg accuracy with params {'n_estimators': 20, 'max_depth': 10} and scores 0.9871,0.9351,0.9739,0.9673,0.9338
+2015-07-20 13:30:31,484 [     INFO] -  INNER: 0.9556 avg accuracy with params {'n_estimators': 50, 'max_depth': 10} and scores 0.9806,0.9545,0.9477,0.9673,0.9272
+2015-07-20 13:30:31,487 [     INFO] -  INNER: 0.9608 avg accuracy with params {'n_estimators': 100, 'max_depth': 10} and scores 0.9935,0.9740,0.9477,0.9608,0.9272
+2015-07-20 13:30:31,490 [     INFO] -  INNER: 0.9373 avg accuracy with params {'n_estimators': 10, 'max_depth': 20} and scores 0.9484,0.9545,0.9412,0.9346,0.9073
+2015-07-20 13:30:31,492 [     INFO] -  INNER: 0.9465 avg accuracy with params {'n_estimators': 20, 'max_depth': 20} and scores 0.9548,0.9545,0.9542,0.9542,0.9139
+2015-07-20 13:30:31,496 [     INFO] -  INNER: 0.9569 avg accuracy with params {'n_estimators': 50, 'max_depth': 20} and scores 0.9742,0.9805,0.9542,0.9542,0.9205
+2015-07-20 13:30:31,501 [     INFO] -  INNER: 0.9569 avg accuracy with params {'n_estimators': 100, 'max_depth': 20} and scores 0.9806,0.9740,0.9542,0.9477,0.9272
+Fitting 5 folds for each of 16 candidates, totalling 80 fits
+2015-07-20 13:30:32,839 [     INFO] - OUTER: 0.9577 test accuracy with params {'n_estimators': 50, 'max_depth': 10} on fold 4
+2015-07-20 13:30:32,840 [     INFO] -  INNER: 0.8123 avg accuracy with params {'n_estimators': 10, 'max_depth': 2} and scores 0.8516,0.7987,0.7857,0.7778,0.8477
+2015-07-20 13:30:32,842 [     INFO] -  INNER: 0.8136 avg accuracy with params {'n_estimators': 20, 'max_depth': 2} and scores 0.8065,0.8117,0.8182,0.8301,0.8013
+2015-07-20 13:30:32,845 [     INFO] -  INNER: 0.8344 avg accuracy with params {'n_estimators': 50, 'max_depth': 2} and scores 0.8645,0.8247,0.8247,0.8431,0.8146
+2015-07-20 13:30:32,847 [     INFO] -  INNER: 0.8488 avg accuracy with params {'n_estimators': 100, 'max_depth': 2} and scores 0.8581,0.8247,0.8377,0.8824,0.8411
+2015-07-20 13:30:32,850 [     INFO] -  INNER: 0.9126 avg accuracy with params {'n_estimators': 10, 'max_depth': 5} and scores 0.9290,0.8766,0.9351,0.9085,0.9139
+2015-07-20 13:30:32,852 [     INFO] -  INNER: 0.9465 avg accuracy with params {'n_estimators': 20, 'max_depth': 5} and scores 0.9355,0.9416,0.9675,0.9281,0.9603
+2015-07-20 13:30:32,854 [     INFO] -  INNER: 0.9557 avg accuracy with params {'n_estimators': 50, 'max_depth': 5} and scores 0.9548,0.9481,0.9675,0.9542,0.9536
+2015-07-20 13:30:32,857 [     INFO] -  INNER: 0.9596 avg accuracy with params {'n_estimators': 100, 'max_depth': 5} and scores 0.9677,0.9481,0.9740,0.9477,0.9603
+2015-07-20 13:30:32,859 [     INFO] -  INNER: 0.9439 avg accuracy with params {'n_estimators': 10, 'max_depth': 10} and scores 0.9419,0.9416,0.9351,0.9412,0.9603
+2015-07-20 13:30:32,862 [     INFO] -  INNER: 0.9583 avg accuracy with params {'n_estimators': 20, 'max_depth': 10} and scores 0.9613,0.9545,0.9610,0.9542,0.9603
+2015-07-20 13:30:32,864 [     INFO] -  INNER: 0.9609 avg accuracy with params {'n_estimators': 50, 'max_depth': 10} and scores 0.9548,0.9610,0.9675,0.9412,0.9801
+2015-07-20 13:30:32,866 [     INFO] -  INNER: 0.9609 avg accuracy with params {'n_estimators': 100, 'max_depth': 10} and scores 0.9613,0.9740,0.9610,0.9477,0.9603
+2015-07-20 13:30:32,869 [     INFO] -  INNER: 0.9426 avg accuracy with params {'n_estimators': 10, 'max_depth': 20} and scores 0.9290,0.9545,0.9481,0.9412,0.9404
+2015-07-20 13:30:32,871 [     INFO] -  INNER: 0.9596 avg accuracy with params {'n_estimators': 20, 'max_depth': 20} and scores 0.9484,0.9740,0.9675,0.9542,0.9536
+2015-07-20 13:30:32,874 [     INFO] -  INNER: 0.9596 avg accuracy with params {'n_estimators': 50, 'max_depth': 20} and scores 0.9613,0.9740,0.9610,0.9477,0.9536
+2015-07-20 13:30:32,876 [     INFO] -  INNER: 0.9596 avg accuracy with params {'n_estimators': 100, 'max_depth': 20} and scores 0.9484,0.9805,0.9675,0.9477,0.9536
+2015-07-20 13:30:32,917 [  WARNING] - Model had unstable parameters
+max_depth  n_estimators
+10         20              1
+           50              2
+           100             1
+20         100             1
+dtype: int64
+2015-07-20 13:30:32,917 [     INFO] - Final Params {'n_estimators': 50, 'max_depth': 10}
+2015-07-20 13:30:33,002 [     INFO] - RFModel: OOB_Score 0.9592
+2015-07-20 13:30:33,013 [     INFO] - Final accuracy: 0.9990 with params {'n_estimators': 50, 'max_depth': 10}

@@ -1,0 +1,80 @@
+2015-08-06 18:21:23,854 [     INFO] - Added data from contig chr1
+2015-08-06 18:25:04,162 [     INFO] - Added data from contig chr10
+2015-08-06 18:34:42,086 [     INFO] - Added data from contig chr2
+2015-08-06 18:42:09,899 [     INFO] - Added data from contig chr3
+2015-08-06 18:46:24,289 [     INFO] - Added data from contig chr4
+2015-08-06 18:51:46,303 [     INFO] - Added data from contig chr5
+2015-08-06 18:58:12,399 [     INFO] - Added data from contig chr6
+2015-08-06 19:02:46,181 [     INFO] - Added data from contig chr7
+2015-08-06 19:06:09,734 [     INFO] - Added data from contig chr8
+2015-08-06 19:09:27,220 [     INFO] - Added data from contig chr9
+2015-08-06 19:24:55,408 [     INFO] - Added data from contig chr2
+2015-08-06 19:36:07,237 [     INFO] - Added data from contig chr3
+2015-08-06 19:46:59,725 [     INFO] - Added data from contig chr4
+2015-08-06 20:02:43,736 [     INFO] - Added data from contig chr2
+2015-08-06 20:14:29,933 [     INFO] - Added data from contig chr3
+2015-08-06 20:26:04,832 [     INFO] - Added data from contig chr4
+2015-08-06 20:41:32,980 [     INFO] - Added data from contig chr2
+2015-08-06 20:53:15,857 [     INFO] - Added data from contig chr3
+2015-08-06 21:04:47,611 [     INFO] - Added data from contig chr4
+2015-08-06 21:20:13,909 [     INFO] - Added data from contig chr2
+2015-08-06 21:31:55,869 [     INFO] - Added data from contig chr3
+2015-08-06 21:43:26,166 [     INFO] - Added data from contig chr4
+2015-08-06 21:59:03,567 [     INFO] - Added data from contig chr2
+2015-08-06 22:07:23,029 [     INFO] - Added data from contig chr3
+2015-08-06 22:09:05,880 [     INFO] - Added data from contig chr4
+2015-08-06 22:24:40,311 [     INFO] - Added data from contig chr2
+2015-08-06 22:33:05,181 [     INFO] - Added data from contig chr3
+2015-08-06 22:34:57,270 [     INFO] - Added data from contig chr4
+2015-08-06 22:50:19,662 [     INFO] - Added data from contig chr2
+2015-08-06 23:01:59,924 [     INFO] - Added data from contig chr3
+2015-08-06 23:13:21,206 [     INFO] - Added data from contig chr4
+2015-08-06 23:13:21,982 [     INFO] - Loaded samples: 1330, features: 32
+2015-08-06 23:13:22,312 [     INFO] - Non-zero samples: 1090, features: 32
+2015-08-06 23:13:22,312 [     INFO] - Loaded 1330 truth labels
+2015-08-06 23:13:22,313 [    DEBUG] - ['pB' 'pA' 'pB' ..., 'pB' 'pB' 'pA']
+2015-08-06 23:13:22,313 [    DEBUG] - [1, 0, 1, 2, 2, 0, 2, 2, 1, 0, 0, 2, 1, 0, 2, 1, 1, 1, 0, 1, 2, 2, 1, 0, 2, 0, 2, 0, 1, 1, 0, 0, 1, 2, 2, 2, 1, 0, 2, 0, 0, 0, 0, 0, 1, 1, 2, 0, 0, 2, 1, 1, 0, 1, 1, 1, 1, 2, 1, 1, 2, 0, 1, 0, 1, 1, 0, 2, 0, 1, 0, 2, 2, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 2, 0, 2, 1, 1, 1, 1, 1, 0, 1, 1, 2, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 2, 1, 2, 0, 0, 1, 1, 2, 1, 0, 0, 1, 0, 0, 2, 0, 2, 0, 0, 2, 2, 1, 1, 2, 0, 2, 1, 1, 2, 1, 0, 0, 1, 0, 1, 0, 0, 2, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 2, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 2, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 2, 1, 1, 0, 1, 2, 0, 1, 1, 2, 0, 0, 2, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 3, 0, 0, 2, 2, 3, 0, 3, 1, 1, 1, 1, 1, 0, 1, 3, 3, 0, 2, 3, 0, 3, 1, 1, 3, 1, 3, 0, 2, 3, 0, 2, 3, 3, 3, 0, 1, 0, 1, 3, 3, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 3, 1, 3, 3, 2, 1, 0, 3, 2, 1, 3, 1, 1, 3, 0, 0, 3, 2, 0, 0, 1, 2, 3, 3, 3, 1, 1, 1, 3, 1, 3, 3, 0, 0, 0, 1, 1, 2, 3, 1, 3, 3, 3, 1, 3, 0, 3, 2, 0, 2, 2, 1, 0, 1, 0, 0, 2, 0, 1, 1, 3, 0, 3, 2, 0, 2, 1, 1, 3, 2, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 2, 3, 1, 3, 2, 1, 0, 2, 2, 0, 1, 1, 3, 3, 3, 3, 3, 0, 0, 1, 3, 1, 1, 3, 2, 3, 1, 0, 3, 3, 0, 0, 1, 0, 0, 3, 1, 1, 2, 0, 1, 2, 3, 2, 3, 1, 3, 0, 2, 0, 3, 1, 0, 3, 3, 0, 2, 1, 3, 1, 0, 1, 2, 2, 3, 1, 0, 1, 2, 1, 2, 2, 3, 0, 1, 2, 2, 0, 3, 0, 3, 0, 3, 0, 0, 1, 0, 1, 0, 1, 2, 3, 2, 0, 3, 1, 2, 1, 1, 2, 1, 3, 3, 2, 3, 1, 1, 0, 3, 0, 3, 1, 2, 1, 3, 3, 0, 3, 0, 1, 1, 3, 3, 1, 3, 1, 0, 2, 2, 1, 0, 1, 2, 1, 3, 2, 2, 1, 0, 1, 0, 0, 3, 3, 3, 0, 3, 0, 0, 2, 0, 3, 0, 1, 1, 0, 1, 1, 0, 3, 3, 2, 0, 3, 3, 1, 1, 0, 1, 3, 0, 2, 2, 1, 0, 2, 3, 3, 2, 3, 0, 1, 0, 3, 1, 1, 1, 1, 1, 0, 3, 0, 3, 0, 3, 3, 3, 3, 2, 0, 3, 3, 0, 3, 0, 1, 2, 2, 3, 1, 0, 1, 3, 0, 1, 1, 0, 1, 2, 3, 3, 0, 0, 1, 1, 0, 3, 0, 1, 0, 0, 1, 1, 3, 0, 1, 3, 3, 2, 0, 2, 1, 0, 2, 0, 2, 1, 1, 1, 0, 3, 0, 3, 3, 3, 2, 2, 0, 2, 3, 3, 3, 1, 0, 2, 2, 0, 1, 3, 3, 1, 1, 0, 2, 1, 3, 3, 0, 1, 1, 0, 1, 0, 0, 1, 1, 2, 2, 2, 0, 3, 2, 0, 3, 1, 1, 2, 2, 3, 3, 0, 2, 0, 1, 3, 0, 2, 0, 2, 3, 3, 0, 2, 2, 1, 2, 3, 0, 0, 0, 1, 2, 3, 0, 2, 0, 2, 3, 1, 1, 1, 3, 0, 1, 0, 0, 3, 2, 3, 1, 0, 3, 3, 1, 1, 0, 0, 1, 3, 1, 3, 1, 1, 2, 3, 0, 0, 3, 0, 3, 2, 2, 3, 0, 3, 0, 0, 0, 3, 0, 2, 0, 2, 1, 0, 2, 2, 1, 1, 1, 0, 1, 3, 1, 3, 2, 1, 1, 3, 3, 3, 3, 1, 2, 3, 0, 1, 2, 3, 1, 1, 2, 3, 0, 0, 2, 2, 3, 3, 3, 1, 1, 1, 3, 1, 0, 1, 3, 3, 3, 2, 3, 0, 3, 1, 0, 1, 2, 2, 3, 0, 1, 0, 3, 1, 0, 1, 1, 1, 1, 3, 3, 1, 2, 3, 2, 1, 3, 0, 3, 3, 0, 0, 1, 3, 0, 2, 2, 1, 0, 2, 1, 3, 3, 3, 1, 0, 0, 2, 0, 0, 2, 0, 3, 1, 0, 3, 2, 0, 3, 1, 1, 3, 0, 0, 1, 3, 0, 2, 0, 1, 1, 3, 2, 0, 3, 2, 1, 2, 0, 1, 0, 3, 1, 2, 0, 0, 1, 1, 2, 3, 1, 0, 3, 1, 3, 3, 1, 3, 0, 2, 1, 3, 0, 1, 2, 3, 0, 2, 3, 0, 3, 3, 1, 0, 1, 1, 3, 0, 1, 0, 1, 0, 2, 2, 3, 1, 3, 2, 1, 1, 0, 1, 3, 3, 1, 3, 1, 0, 0, 3, 3, 1, 0, 2, 3, 2, 1, 3, 1, 1, 0, 2, 3, 1, 0, 0, 0, 0, 1, 2, 3, 1, 1, 0, 2, 2, 3, 3, 0, 3, 0, 0, 1, 3, 0, 3, 2, 1, 0, 3, 2, 1, 3, 3, 3, 0, 1, 1, 2, 3, 2, 2, 3, 0, 2, 3, 3, 2, 0, 1, 3, 3, 3, 1, 2, 1, 0, 3, 3, 1, 1, 1, 2, 1, 0, 3, 0, 1, 0, 0, 0, 1, 1, 0, 3, 2, 1, 3, 0, 3, 0, 3, 2, 0, 1, 3, 0, 0, 3, 1, 3, 0, 3, 3, 0, 3, 0, 1, 2, 3, 1, 3, 2, 2, 0, 1, 2, 1, 2, 1, 1, 3, 0, 2, 3, 3, 2, 0, 0, 3, 1, 3, 1, 0, 0, 1, 0, 0, 2, 3, 3, 3, 0, 2, 1, 3, 0, 1, 0, 3, 1, 2, 0, 3, 0, 1, 1, 1, 3, 0, 3, 1, 2, 0, 2, 0, 1, 0, 1, 3, 3, 3, 2, 2, 0, 2, 1, 0, 0, 1, 1, 1, 0]
+2015-08-06 23:13:22,313 [    DEBUG] - [1 0 1 ..., 1 1 0]
+2015-08-06 23:13:22,317 [    DEBUG] - Data shape (1090, 32), label shape (1090,)
+2015-08-06 23:13:22,317 [    DEBUG] - Train shape (871,), test shape (219,)
+2015-08-06 23:13:22,317 [    DEBUG] - Train Data shape (871, 32), Train Label shape (871,)
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+2015-08-06 23:13:23,361 [     INFO] - OUTER: 0.8767 test accuracy with params {'C': 100} on fold 0
+2015-08-06 23:13:23,362 [     INFO] -  INNER: 0.7371 avg accuracy with params {'C': 0.1} and scores 0.7330,0.7486,0.7471,0.7356,0.7209
+2015-08-06 23:13:23,365 [     INFO] -  INNER: 0.7761 avg accuracy with params {'C': 1} and scores 0.8182,0.7943,0.7529,0.7586,0.7558
+2015-08-06 23:13:23,368 [     INFO] -  INNER: 0.8622 avg accuracy with params {'C': 10} and scores 0.8977,0.8971,0.8333,0.8448,0.8372
+2015-08-06 23:13:23,370 [     INFO] -  INNER: 0.9070 avg accuracy with params {'C': 100} and scores 0.9034,0.9257,0.8966,0.9080,0.9012
+2015-08-06 23:13:23,373 [    DEBUG] - Train shape (871,), test shape (219,)
+2015-08-06 23:13:23,373 [    DEBUG] - Train Data shape (871, 32), Train Label shape (871,)
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+2015-08-06 23:13:24,390 [     INFO] - OUTER: 0.9498 test accuracy with params {'C': 100} on fold 1
+2015-08-06 23:13:24,391 [     INFO] -  INNER: 0.7107 avg accuracy with params {'C': 0.1} and scores 0.7045,0.7314,0.6954,0.7299,0.6919
+2015-08-06 23:13:24,394 [     INFO] -  INNER: 0.7727 avg accuracy with params {'C': 1} and scores 0.7784,0.7829,0.7644,0.7759,0.7616
+2015-08-06 23:13:24,396 [     INFO] -  INNER: 0.8645 avg accuracy with params {'C': 10} and scores 0.8693,0.8514,0.8736,0.8621,0.8663
+2015-08-06 23:13:24,399 [     INFO] -  INNER: 0.8886 avg accuracy with params {'C': 100} and scores 0.8920,0.9029,0.8793,0.8793,0.8895
+2015-08-06 23:13:24,401 [    DEBUG] - Train shape (872,), test shape (218,)
+2015-08-06 23:13:24,401 [    DEBUG] - Train Data shape (872, 32), Train Label shape (872,)
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+2015-08-06 23:13:25,288 [     INFO] - OUTER: 0.8945 test accuracy with params {'C': 100} on fold 2
+2015-08-06 23:13:25,289 [     INFO] -  INNER: 0.7397 avg accuracy with params {'C': 0.1} and scores 0.7500,0.7216,0.7759,0.7586,0.6919
+2015-08-06 23:13:25,292 [     INFO] -  INNER: 0.7821 avg accuracy with params {'C': 1} and scores 0.7898,0.7727,0.7816,0.7931,0.7733
+2015-08-06 23:13:25,294 [     INFO] -  INNER: 0.8761 avg accuracy with params {'C': 10} and scores 0.8523,0.8750,0.8851,0.8621,0.9070
+2015-08-06 23:13:25,297 [     INFO] -  INNER: 0.9140 avg accuracy with params {'C': 100} and scores 0.9261,0.8750,0.9195,0.9310,0.9186
+2015-08-06 23:13:25,299 [    DEBUG] - Train shape (872,), test shape (218,)
+2015-08-06 23:13:25,299 [    DEBUG] - Train Data shape (872, 32), Train Label shape (872,)
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+2015-08-06 23:13:26,194 [     INFO] - OUTER: 0.9128 test accuracy with params {'C': 100} on fold 3
+2015-08-06 23:13:26,195 [     INFO] -  INNER: 0.7248 avg accuracy with params {'C': 0.1} and scores 0.7273,0.7443,0.6897,0.7356,0.7267
+2015-08-06 23:13:26,197 [     INFO] -  INNER: 0.7661 avg accuracy with params {'C': 1} and scores 0.7557,0.8011,0.7529,0.7644,0.7558
+2015-08-06 23:13:26,200 [     INFO] -  INNER: 0.8532 avg accuracy with params {'C': 10} and scores 0.8352,0.8807,0.8621,0.8218,0.8663
+2015-08-06 23:13:26,202 [     INFO] -  INNER: 0.9106 avg accuracy with params {'C': 100} and scores 0.8920,0.9432,0.9195,0.8908,0.9070
+2015-08-06 23:13:26,205 [    DEBUG] - Train shape (874,), test shape (216,)
+2015-08-06 23:13:26,205 [    DEBUG] - Train Data shape (874, 32), Train Label shape (874,)
+Fitting 5 folds for each of 4 candidates, totalling 20 fits
+2015-08-06 23:13:27,081 [     INFO] - OUTER: 0.9028 test accuracy with params {'C': 100} on fold 4
+2015-08-06 23:13:27,082 [     INFO] -  INNER: 0.7357 avg accuracy with params {'C': 0.1} and scores 0.7614,0.7386,0.7586,0.7816,0.6379
+2015-08-06 23:13:27,085 [     INFO] -  INNER: 0.7849 avg accuracy with params {'C': 1} and scores 0.8068,0.7841,0.7874,0.8276,0.7184
+2015-08-06 23:13:27,087 [     INFO] -  INNER: 0.8387 avg accuracy with params {'C': 10} and scores 0.8864,0.8523,0.8448,0.8506,0.7586
+2015-08-06 23:13:27,090 [     INFO] -  INNER: 0.9016 avg accuracy with params {'C': 100} and scores 0.9034,0.8920,0.9080,0.9368,0.8678
+2015-08-06 23:13:27,138 [     INFO] - Final Params {'C': 100}
+2015-08-06 23:13:27,474 [     INFO] - Final accuracy: 0.9257 with params {'C': 100}

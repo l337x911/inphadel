@@ -1,0 +1,67 @@
+2015-07-14 15:14:33,553 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:33,554 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:33,554 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:33,557 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:33,557 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:33,558 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:33,560 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:33,561 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:33,561 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:33,564 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:33,564 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:33,565 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:33,567 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:33,568 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:33,568 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:33,571 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:33,571 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:33,572 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:33,574 [     INFO] - Added data from contig chr2
+2015-07-14 15:14:33,575 [     INFO] - Added data from contig chr3
+2015-07-14 15:14:33,575 [     INFO] - Added data from contig chr4
+2015-07-14 15:14:33,575 [     INFO] - Using preloaded features.
+2015-07-14 15:14:33,576 [     INFO] - Loaded samples: 1050, features: 32
+2015-07-14 15:14:33,606 [     INFO] - Non-zero samples: 879, features: 32
+2015-07-14 15:14:33,606 [     INFO] - Loaded 1050 truth labels
+Fitting 5 folds for each of 5 candidates, totalling 25 fits
+2015-07-14 15:14:33,755 [     INFO] - OUTER: 0.8418 test accuracy with params {'n_neighbors': 2} on fold 0
+2015-07-14 15:14:33,755 [     INFO] -  INNER: 0.8718 avg accuracy with params {'n_neighbors': 2} and scores 0.8803,0.8582,0.8723,0.8571,0.8913
+2015-07-14 15:14:33,757 [     INFO] -  INNER: 0.8647 avg accuracy with params {'n_neighbors': 4} and scores 0.8732,0.8227,0.9007,0.8429,0.8841
+2015-07-14 15:14:33,759 [     INFO] -  INNER: 0.8547 avg accuracy with params {'n_neighbors': 8} and scores 0.8732,0.8227,0.8794,0.8143,0.8841
+2015-07-14 15:14:33,760 [     INFO] -  INNER: 0.8390 avg accuracy with params {'n_neighbors': 16} and scores 0.8803,0.8085,0.8936,0.8000,0.8116
+2015-07-14 15:14:33,761 [     INFO] -  INNER: 0.8091 avg accuracy with params {'n_neighbors': 32} and scores 0.8451,0.8014,0.8085,0.7857,0.8043
+Fitting 5 folds for each of 5 candidates, totalling 25 fits
+2015-07-14 15:14:33,902 [     INFO] - OUTER: 0.8814 test accuracy with params {'n_neighbors': 2} on fold 1
+2015-07-14 15:14:33,903 [     INFO] -  INNER: 0.8761 avg accuracy with params {'n_neighbors': 2} and scores 0.8803,0.8865,0.8652,0.8714,0.8768
+2015-07-14 15:14:33,905 [     INFO] -  INNER: 0.8661 avg accuracy with params {'n_neighbors': 4} and scores 0.8380,0.8723,0.8369,0.9000,0.8841
+2015-07-14 15:14:33,908 [     INFO] -  INNER: 0.8504 avg accuracy with params {'n_neighbors': 8} and scores 0.8239,0.8936,0.8156,0.8500,0.8696
+2015-07-14 15:14:33,911 [     INFO] -  INNER: 0.8547 avg accuracy with params {'n_neighbors': 16} and scores 0.8451,0.9149,0.8085,0.8429,0.8623
+2015-07-14 15:14:33,912 [     INFO] -  INNER: 0.7991 avg accuracy with params {'n_neighbors': 32} and scores 0.8028,0.8652,0.7730,0.7286,0.8261
+Fitting 5 folds for each of 5 candidates, totalling 25 fits
+2015-07-14 15:14:34,061 [     INFO] - OUTER: 0.9148 test accuracy with params {'n_neighbors': 4} on fold 2
+2015-07-14 15:14:34,062 [     INFO] -  INNER: 0.8606 avg accuracy with params {'n_neighbors': 2} and scores 0.8380,0.8440,0.8298,0.9220,0.8696
+2015-07-14 15:14:34,064 [     INFO] -  INNER: 0.8663 avg accuracy with params {'n_neighbors': 4} and scores 0.8592,0.8511,0.8369,0.9007,0.8841
+2015-07-14 15:14:34,066 [     INFO] -  INNER: 0.8535 avg accuracy with params {'n_neighbors': 8} and scores 0.8380,0.8511,0.8156,0.9007,0.8623
+2015-07-14 15:14:34,067 [     INFO] -  INNER: 0.8378 avg accuracy with params {'n_neighbors': 16} and scores 0.8592,0.8511,0.7589,0.8936,0.8261
+2015-07-14 15:14:34,069 [     INFO] -  INNER: 0.8080 avg accuracy with params {'n_neighbors': 32} and scores 0.8451,0.8085,0.7092,0.8511,0.8261
+Fitting 5 folds for each of 5 candidates, totalling 25 fits
+2015-07-14 15:14:34,216 [     INFO] - OUTER: 0.8580 test accuracy with params {'n_neighbors': 4} on fold 3
+2015-07-14 15:14:34,217 [     INFO] -  INNER: 0.8549 avg accuracy with params {'n_neighbors': 2} and scores 0.9014,0.8440,0.8156,0.8652,0.8478
+2015-07-14 15:14:34,219 [     INFO] -  INNER: 0.8606 avg accuracy with params {'n_neighbors': 4} and scores 0.8873,0.8723,0.8227,0.8511,0.8696
+2015-07-14 15:14:34,221 [     INFO] -  INNER: 0.8535 avg accuracy with params {'n_neighbors': 8} and scores 0.8803,0.8440,0.8156,0.8440,0.8841
+2015-07-14 15:14:34,223 [     INFO] -  INNER: 0.8521 avg accuracy with params {'n_neighbors': 16} and scores 0.8592,0.8440,0.8227,0.8511,0.8841
+2015-07-14 15:14:34,225 [     INFO] -  INNER: 0.8179 avg accuracy with params {'n_neighbors': 32} and scores 0.7817,0.8085,0.8014,0.8511,0.8478
+Fitting 5 folds for each of 5 candidates, totalling 25 fits
+2015-07-14 15:14:34,372 [     INFO] - OUTER: 0.8382 test accuracy with params {'n_neighbors': 2} on fold 4
+2015-07-14 15:14:34,373 [     INFO] -  INNER: 0.8654 avg accuracy with params {'n_neighbors': 2} and scores 0.8380,0.9155,0.8582,0.8582,0.8571
+2015-07-14 15:14:34,376 [     INFO] -  INNER: 0.8513 avg accuracy with params {'n_neighbors': 4} and scores 0.8310,0.8803,0.8582,0.8440,0.8429
+2015-07-14 15:14:34,378 [     INFO] -  INNER: 0.8286 avg accuracy with params {'n_neighbors': 8} and scores 0.8169,0.8803,0.8227,0.8369,0.7857
+2015-07-14 15:14:34,380 [     INFO] -  INNER: 0.8527 avg accuracy with params {'n_neighbors': 16} and scores 0.8310,0.8803,0.8227,0.8865,0.8429
+2015-07-14 15:14:34,381 [     INFO] -  INNER: 0.8088 avg accuracy with params {'n_neighbors': 32} and scores 0.8521,0.8169,0.7447,0.8156,0.8143
+2015-07-14 15:14:34,392 [  WARNING] - Model had unstable parameters
+n_neighbors
+2              3
+4              2
+dtype: int64
+2015-07-14 15:14:34,392 [     INFO] - Final Params {'n_neighbors': 2}
+2015-07-14 15:14:34,421 [     INFO] - Final accuracy: 0.9545 with params {'n_neighbors': 2}
