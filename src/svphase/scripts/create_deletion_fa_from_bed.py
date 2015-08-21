@@ -1,7 +1,7 @@
 """ Takes a reference fasta sequence and removes bed positions """
 
 from svphase.chromosome import Chromosome, DelModifier
-from svphase.inphadel import ClassLabel
+from svphase.learn.evaluation import ClassLabel
 from svphase.utils import reference
 from svphase.utils.common import logger
 import sys

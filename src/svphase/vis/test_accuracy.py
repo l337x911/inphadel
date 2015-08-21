@@ -27,6 +27,9 @@ def plot(labels, model_stats, low_ylim=0.40, high_ylim=1.00):
 	
 	#ax.bar(np.zeros(len(labels)), np.ones(len(labels), dtype=float), color='0.9', linewidth=0)
 	ax.bar(np.arange(len(labels), dtype=float)+0.1, statsdf['avg'].values, yerr=statsdf['std'].values, color=COLORS['cor'], linewidth=0) 
+
+	for px, value, std in zip(np.arange(len(labels), dtype=float)+0.5, statsdf['avg'].values, statsdf['std'].values):
+		ax.text(px, low_ylim+0.05, "{0:0.2f} $\pm$ {1:0.2f}".format(value, std), ha='center', va='bottom', size='small')
 	
 	ax.set_xticks(np.arange(len(labels),dtype=float)+0.5)
 	ax.set_xticklabels(tuple(labels), rotation=80, multialignment='center')

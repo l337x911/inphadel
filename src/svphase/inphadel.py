@@ -10,7 +10,8 @@ import warnings
 from itertools import chain, compress
 from operator import itemgetter
 from svphase.learn.cov import FileStructureData, RPKMAdaptor
-from svphase.learn.features import Features
+from svphase.learn.evaluation import Evaluation
+from svphase.learn.features import Features, HicOnlySubset, WgsOnlySubset
 from svphase.scripts.sam_read_split import split_reads_by_allele
 from svphase.utils.common import logger
 
@@ -19,36 +20,16 @@ __company__ = "University of California, San Diego"
 __email__ = "adp002@ucsd.edu"
 __version__ = '1.0'
 
-class ClassLabel(object):
-	def __init__(self):
-		self.classes = ['pA','pB','hom', 'inc']
-		self.int_to_str_dict = dict(zip(range(len(self.classes)), self.classes))
-		self.str_to_int_dict = dict(zip(self.classes, range(len(self.classes))))
-	def is_deletion_on_a(self, c):
-		if c=='pA' or c=='hom':
-			return True
-		else: 
-			return False
-	def is_deletion_on_b(self, c):
-		if c=='pB' or c=='hom':
-			return True
-		else: 
-			return False
 
-class Predictor(object):
+class Predictor(Evaluation):
 	def __init__(self, pickle_fpath, feature_subset=None):
-		self.feature_subset = feature_subset
+		Evaluation.__init__(self, feature_subset)
+
 		with open(pickle_fpath, 'rb') as f:
 			self.clf = pickle.load(f)
 		print "Clf Params:"
 		print self.clf.get_params()		
-		self.data = []
-		self.feats = None # Features Object
-
-		self.labels = ClassLabel()
 		
-	def add_data(self, data):
-		self.data.append(data)
 	def get_loci(self):
 		return list(chain(*[d.loci for d in self.data]))
 
@@ -59,15 +40,15 @@ class Predictor(object):
 		print "# of Samples:", features.shape[0]
 		print "# of Zero Samples:", sum(self.feats.get_nonzero()==False)
 		
-	def set_features(self):
-		if self.feats is None:
-			self.feats = Features(self.data, self.feature_subset)
+	#def set_features(self):
+	#	if self.feats is None:
+	#		self.feats = Features(self.data, self.feature_subset)
 
 	def get_pred_series(self, pred):
 		loci = self.get_loci()
 
 		zero_loci = list(compress(loci, np.logical_not(self.feats.get_nonzero())))
-		s = pd.Series([self.labels.int_to_str_dict[i] for i in pred], index=compress(loci, self.feats.get_nonzero()))
+		s = pd.Series([self.label_obj.int_to_str_dict[i] for i in pred], index=compress(loci, self.feats.get_nonzero()))
 		if len(zero_loci) > 0:
 			s = s.append(pd.Series(['no_data',]*len(zero_loci), index=zero_loci))
 		return s
@@ -76,8 +57,9 @@ class Predictor(object):
 		loci = self.get_loci()
 		zero_loci = list(compress(loci, np.logical_not(self.feats.get_nonzero())))
 
-		df = pd.DataFrame(pred, index=compress(loci,self.feats.get_nonzero())).rename(columns=self.labels.int_to_str_dict)
-		nan_df = pd.DataFrame([[-np.inf]*len(df.columns),]*len(zero_loci), index=zero_loci).rename(columns=self.labels.int_to_str_dict)
+		df = pd.DataFrame(pred, index=compress(loci,self.feats.get_nonzero())).rename(columns=self.label_obj.int_to_str_dict)
+
+		nan_df = pd.DataFrame([[-np.inf]*len(df.columns),]*len(zero_loci), index=zero_loci).rename(columns=self.label_obj.int_to_str_dict)
 		df['best'] = df.apply(lambda s:s.argmax(), axis=1)
 		nan_df['best'] = 'no_data'
 
@@ -92,8 +74,6 @@ class Predictor(object):
 		return self.get_pred_series(pred) 
 			
 	def predict_log_proba(self):
-		self.set_features()
-		self.check_features()
 		
 		features = self.feats.get_nonzero_features()
 		try:	
@@ -125,9 +105,11 @@ def default_arguments(parser):
 	parser.add_argument('model', default='rf', help='Model used to classify deletions (rf - RandomForest, svm - Support Vector Machine, nn - Nearest Neighbors)', choices=['rf','svm','knn'])
 	#parser.add_argument('--test', dest='test', action='store_true', default=False, help='Run unit tests to ensure proper installation')
 	parser.add_argument('version', help='version of training model generated')
-	parser.add_argument('-r,--reference', dest='reference_fasta', default=None, help='path to reference fasta (defaults to reference in config.py)')
 	parser.add_argument('--simple-sum', dest='simple_sum', action='store_true', default=False, help='Computes simple sum features instead of all RPKM the default')
 	parser.add_argument('--debug', dest='debug', action='store_true', default=False, help=argparse.SUPPRESS)
+	parser.add_argument('--subset', type=str, default=None, choices=['hic-only','wgs-only'], help='Data-specific feature subset to use.')
+	parser.add_argument('-P', '--preload-features', dest='preload_feats', action='store_true', default=False, help='Preload features from disk. Fpath is derived from model/version')
+	parser.add_argument('-S', '--save-features', dest='save_feats', action='store_true', default=False, help='Save features to disk  for speed. Fpath is derived from model/version')
 
 
 def main():
@@ -135,6 +117,8 @@ def main():
 	from pkg_resources import Requirement, resource_filename
 
 	parser = argparse.ArgumentParser(description=__doc__)
+	parser.add_argument('-r,--reference', dest='reference_fasta', default=None, help='path to reference fasta (defaults to reference in config.py)')
+	parser.add_argument('--test-version', dest='test_version', default='', help='version of training model generated')
 	parser.add_argument('--ftype', default='bam', help='file format for reads', choices=['bam','dat'])
 	parser.add_argument('bed', help='Simple bed file containing deletions (coordinates on reference)')
 	parser.add_argument('input_dir', help='directory containing input hic bam, wgs bam, and idxstat files.')
@@ -151,9 +135,20 @@ def main():
 	sv_fpath = args.bed
 
 	model_pkl = resource_filename(Requirement.parse('InPhaDel'), 'models/{m}.{v}.pkl'.format(m=args.model, v=args.version))
+	feats_to_disk = resource_filename(Requirement.parse('InPhaDel'), 'models/feats_test.{v}'.format(v=args.test_version))
+	save_prefix = feats_to_disk if args.save_feats else None
+	preload_prefix = feats_to_disk if args.preload_feats else None
 
 	out_csv = args.out_csv
 	ref_fpath=args.reference_fasta
+
+	if args.subset is None:
+		feature_subset = None
+	elif args.subset=='hic-only':
+		feature_subset = HicOnlySubset()
+	elif args.subset=='wgs-only':
+		feature_subset = WgsOnlySubset()
+
 
 	# Validate File Structure
 	if not os.path.isdir(os.path.join(input_dir, 'wgs')):
@@ -190,7 +185,7 @@ def main():
 	hic_read_count = pd.read_csv(hic_stat_fpath, sep='\t', header=None, index_col=0).astype(int)
 
 	# Process for each contig
-	predr = Predictor(model_pkl)
+	predr = Predictor(model_pkl, feature_subset)
 	#print loci
 	for contig in loci.contig.unique():
 		if not os.path.isfile(os.path.join(input_dir, 'vcf', contig+'.vcf')):
@@ -205,9 +200,12 @@ def main():
 		adaptor = RPKMAdaptor(wgs_read_count.loc[contig,1], hic_read_count.loc[contig,1])
 		#adaptor = RPKMAdaptor(wgs_read_count.loc['chr19',1]+wgs_read_count.loc['chr20',1], hic_read_count.loc['chr19',1]+hic_read_count.loc['chr20',1])
 		
-		d.fill(adaptor=adaptor)
+		if not args.preload_feats:
+			d.fill(adaptor=adaptor)
 		predr.add_data(d)
 
+	predr.set_features(save_prefix=save_prefix, preload_prefix=preload_prefix, simple_sum_flag=args.simple_sum)
+	predr.check_features()
 	with warnings.catch_warnings():
 		warnings.simplefilter("ignore")
     

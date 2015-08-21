@@ -324,13 +324,16 @@ class Data(object):
 	def fill(self, adaptor, save_flag=False):
 		if adaptor is None:
 			adaptor = DataAdaptor()
+		try:
+			self.wgs = perform_one_break(self.loci, self.wgs_fpath, out_flag=False)
+			self.wgs_allele = perform_one_break_allele(self.loci, self.wgsa_fpath, self.wgsb_fpath, out_flag=False)
+			self.hic_allele = orient_wrap_hic(perform_one_break_allele(self.loci, self.hica_fpath, self.hicb_fpath, out_flag=False))
+			self.hic_allele_ncut = orient_wrap_hic(perform_one_break_allele_cut(self.ref_fpath, self.loci, self.hica_fpath, self.hicb_fpath, out_flag=False))
+			adaptor.adapt(self)
+		except:
+			print "Errored data fill:", self.loci
+			raise		
 
-		self.wgs = perform_one_break(self.loci, self.wgs_fpath, out_flag=False)
-		self.wgs_allele = perform_one_break_allele(self.loci, self.wgsa_fpath, self.wgsb_fpath, out_flag=False)
-		self.hic_allele = orient_wrap_hic(perform_one_break_allele(self.loci, self.hica_fpath, self.hicb_fpath, out_flag=False))
-		self.hic_allele_ncut = orient_wrap_hic(perform_one_break_allele_cut(self.ref_fpath, self.loci, self.hica_fpath, self.hicb_fpath, out_flag=False))
-		adaptor.adapt(self)
-		
 		if save_flag and not self.check_on_disk():
 			self.save()
 

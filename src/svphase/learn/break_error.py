@@ -16,6 +16,7 @@ def create_grid(truth_fpath, n=3):
 			d.loc[:,'end'] = d['end'].astype(int)+b
 			d.to_csv(fmt.format(d=truth_dir, a=a, b=b), sep='\t', index=False, header=False)
 
+
 """
 def split_accuracy_by_size():
   size_bins = [(1,5),(5,10),(10,0)]

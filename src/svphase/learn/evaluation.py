@@ -2,10 +2,27 @@ import sys
 import pandas as pd
 from itertools import chain
 import numpy as np
-
+import os
 from svphase.utils.common import logger
 from svphase.learn.features import Features, PreloadFeatures, SimpleSumFeatures
-from svphase.inphadel import ClassLabel
+
+class ClassLabel(object):
+	def __init__(self):
+		self.classes = ['pA','pB','hom', 'inc']
+		self.int_to_str_dict = dict(zip(range(len(self.classes)), self.classes))
+		self.str_to_int_dict = dict(zip(self.classes, range(len(self.classes))))
+	def is_deletion_on_a(self, c):
+		if c=='pA' or c=='hom':
+			return True
+		else: 
+			return False
+	def is_deletion_on_b(self, c):
+		if c=='pB' or c=='hom':
+			return True
+		else: 
+			return False
+	def is_class(self, c):
+		return c in self.classes
 
 class Evaluation(object):
 	def __init__(self, feature_subset=None):

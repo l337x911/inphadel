@@ -38,7 +38,7 @@ class SVMModel(Model):
 	def __init__(self, model_pkl, random_state):
 		Model.__init__(self, model_pkl, random_state)
 		self.clf = svm.SVC(kernel='linear', probability=True, random_state=self.random_state)
-		self.params = {'C':[1,10,100]}
+		self.params = {'C':[.1,1,10,100]}
 
 class RFModel(Model):
 	def __init__(self, model_pkl, random_state):
@@ -172,22 +172,15 @@ class Trainer(Evaluation):
 			pickle.dump(model.clf, f)
 
 class PrepTrainingFileStructure(object):
-	def __init__(self, idir, ftype):
-		assert ftype=='dat' or ftype=='bam'
-		self.ftype = ftype
-		if ftype == 'bam':
-			self.idx_ftype = 'bai'
-		elif ftype == 'dat':
-			self.idx_ftype = 'npz'
-		else:
-			logger.error('No valid read filetype: %s', ftype)
-			sys.exit(1)
-
+	def __init__(self, idir):
 		self.idir = idir
 		self.sv_fpath = None
 		self.wgs_read_count = None	
 		self.hic_read_count = None	
 		self.loci = None
+		self.ref_fpath = None
+		self.ftype = None
+		self.idx_ftype = None
 
 	def load(self):
 		""" Validate File Structure """
@@ -201,6 +194,30 @@ class PrepTrainingFileStructure(object):
 		self.sv_fpath = os.path.join(self.idir, 'truth','truth.bed')
 		if not os.path.isfile(self.sv_fpath):
 			logger.error('Truth bed file not found: %s', self.sv_fpath)
+			sys.exit(1)
+
+		self.ref_fpath = os.path.join(self.idir, 'reference.fa')
+		if not os.path.isfile(self.ref_fpath):
+			logger.error('Reference file not found: %s', self.ref_fpath)
+			sys.exit(1)
+		if not os.path.isfile(self.ref_fpath + '.fai'):
+			logger.error('Reference Index file not found: %s', self.ref_fpath)
+			sys.exit(1)
+		
+		if os.path.isfile(os.path.join(self.idir, 'dat')):
+			self.ftype = 'dat'
+		elif os.path.isfile(os.path.join(self.idir, 'bam')):
+			self.ftype = 'bam'
+		else:
+			logger.error('No read filetype file found. idir should contain a bam or dat file')
+			sys.exit(1)
+
+		if self.ftype == 'bam':
+			self.idx_ftype = 'bai'
+		elif self.ftype == 'dat':
+			self.idx_ftype = 'npz'
+		else:
+			logger.error('No valid read filetype extensions: %s', self.ftype)
 			sys.exit(1)
 
 		self._set_read_counts()		
@@ -261,14 +278,11 @@ def main():
 	parser = argparse.ArgumentParser(description=__doc__)
 	
 	default_arguments(parser)
-	parser.add_argument('ftype', help='file format for reads', choices=['bam','dat'])
+	#parser.add_argument('ftype', help='file format for reads', choices=['bam','dat'])
 	# Sets the input file directories, model, reference, and debug
 	parser.add_argument('input_dirs', nargs='+', help='directories containing input hic bam, wgs bam, and idxstat files.')
 
 	parser.add_argument('--seed', type=int, default=None, help='Random initial state for some training procedures')
-	parser.add_argument('--subset', type=str, default=None, choices=['hic-only','wgs-only'], help='Data-specific feature subset to use.')
-	parser.add_argument('-P', '--preload-features', dest='preload_feats', action='store_true', default=False, help='Preload features from disk. Fpath is derived from model/version')
-	parser.add_argument('-S', '--save-features', dest='save_feats', action='store_true', default=False, help='Save features to disk  for speed. Fpath is derived from model/version')
 	parser.add_argument('-k', type=int, default=5, help='# of folds in nested cross validation')	
 	parser.add_argument('-C', '--check-features', dest='check_feats', action='store_true', default=False, help='Outputs features for training data')	
 
@@ -283,7 +297,7 @@ def main():
 
 	model_pkl = resource_filename(Requirement.parse('InPhaDel'), 'models/{m}.{v}.pkl'.format(m=args.model, v=args.version))
 
-	ref_fpath=args.reference_fasta
+	#ref_fpath=args.reference_fasta
 	feats_to_disk = resource_filename(Requirement.parse('InPhaDel'), 'models/feats.{v}'.format(v=args.version))
 
 	save_prefix = feats_to_disk if args.save_feats else None
@@ -300,11 +314,11 @@ def main():
 	trainer = Trainer(k=args.k, feature_subset=feature_subset)
 	#print loci
 	for idir in args.input_dirs:	
-		fs = PrepTrainingFileStructure(idir, args.ftype)
+		fs = PrepTrainingFileStructure(idir)
 		fs.load()
 		
 		for contig in sorted(fs.loci.contig.unique()):
-			d = FileStructureDataWithTruth(os.path.join(idir, 'wgs'), os.path.join(idir, 'hic'), fs.sv_fpath, contig, file_fmt=args.ftype, ref_fpath=ref_fpath)
+			d = FileStructureDataWithTruth(os.path.join(idir, 'wgs'), os.path.join(idir, 'hic'), fs.sv_fpath, contig, file_fmt=fs.ftype, ref_fpath=fs.ref_fpath)
 
 			adaptor = RPKMAdaptor(fs.wgs_read_count.loc[contig,1], fs.hic_read_count.loc[contig,1])
 			if not args.preload_feats: 	

@@ -7,7 +7,7 @@ from matplotlib import gridspec
 
 from svphase.learn.features import PreloadFeatures
 from svphase.analyze.compare_model_stats import get_model_and_version, main_per_class as compare_model_stats
-from svphase.inphadel import ClassLabel
+from svphase.learn.evaluation import ClassLabel
 from svphase.utils.config import FONT, COLORS
 
 def plot(models_dir, model, model_versions, rlabels, title, low_ylim=0.4, high_ylim=1.0):
