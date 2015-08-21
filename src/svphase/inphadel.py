@@ -14,6 +14,7 @@ from svphase.learn.evaluation import Evaluation
 from svphase.learn.features import Features, HicOnlySubset, WgsOnlySubset
 from svphase.scripts.sam_read_split import split_reads_by_allele
 from svphase.utils.common import logger
+from svphase.utils.config import SUPPRESS_ARGS
 
 __author__ = 'Anand Patel'
 __company__ = "University of California, San Diego"
@@ -102,24 +103,40 @@ def check_for_contig_bam_and_split(input_dir, data_src, contig, ftype):
 
 	
 def default_arguments(parser):
-	parser.add_argument('model', default='rf', help='Model used to classify deletions (rf - RandomForest, svm - Support Vector Machine, nn - Nearest Neighbors)', choices=['rf','svm','knn'])
-	#parser.add_argument('--test', dest='test', action='store_true', default=False, help='Run unit tests to ensure proper installation')
-	parser.add_argument('version', help='version of training model generated')
-	parser.add_argument('--simple-sum', dest='simple_sum', action='store_true', default=False, help='Computes simple sum features instead of all RPKM the default')
-	parser.add_argument('--debug', dest='debug', action='store_true', default=False, help=argparse.SUPPRESS)
-	parser.add_argument('--subset', type=str, default=None, choices=['hic-only','wgs-only'], help='Data-specific feature subset to use.')
-	parser.add_argument('-P', '--preload-features', dest='preload_feats', action='store_true', default=False, help='Preload features from disk. Fpath is derived from model/version')
-	parser.add_argument('-S', '--save-features', dest='save_feats', action='store_true', default=False, help='Save features to disk  for speed. Fpath is derived from model/version')
+	suppress_help = {}
+	suppress_help['simple_sum'] = 'Computes simple sum features instead of all RPKM the default'
+	suppress_help['subset'] = 'Data-specific feature subset to use.'
+	suppress_help['preload_feats'] = 'Preload features from disk. Fpath is derived from model/version'
+	suppress_help['save_feats'] = 'Save features to disk  for speed. Fpath is derived from model/version'
 
+	if SUPPRESS_ARGS:
+		for k in suppress_help.keys():
+			suppress_help[k] = argparse.SUPPRESS
+
+	parser.add_argument('--model', default='rf', help='Model used to classify deletions {rf - RandomForest (default), svm - Support Vector Machine, nn - Nearest Neighbors}', choices=['rf','svm','knn'])
+	#parser.add_argument('--test', dest='test', action='store_true', default=False, help='Run unit tests to ensure proper installation')
+	parser.add_argument('--version', default='2.3', help='version of training model (default 2.3)')
+	parser.add_argument('--simple-sum', dest='simple_sum', action='store_true', default=False, help=suppress_help['simple_sum'])
+	parser.add_argument('--debug', dest='debug', action='store_true', default=False, help=argparse.SUPPRESS)
+	parser.add_argument('--subset', type=str, default=None, choices=['hic-only','wgs-only'], help=suppress_help['subset'])
+	parser.add_argument('-P', '--preload-features', dest='preload_feats', action='store_true', default=False, help=suppress_help['preload_feats'])
+	parser.add_argument('-S', '--save-features', dest='save_feats', action='store_true', default=False, help=suppress_help['save_feats'])
 
 def main():
 	import logging
 	from pkg_resources import Requirement, resource_filename
+	suppress_help = {}
+	suppress_help['test_version'] = 'version of training model generated'
+	suppress_help['ftype']='file format for reads'
+
+	if SUPPRESS_ARGS:
+		for k in suppress_help.keys():
+			suppress_help[k] = argparse.SUPPRESS
 
 	parser = argparse.ArgumentParser(description=__doc__)
 	parser.add_argument('-r,--reference', dest='reference_fasta', default=None, help='path to reference fasta (defaults to reference in config.py)')
-	parser.add_argument('--test-version', dest='test_version', default='', help='version of training model generated')
-	parser.add_argument('--ftype', default='bam', help='file format for reads', choices=['bam','dat'])
+	parser.add_argument('--test-version', dest='test_version', default='', help=suppress_help['test_version'])
+	parser.add_argument('--ftype', default='bam', help=suppress_help['ftype'], choices=['bam','dat'])
 	parser.add_argument('bed', help='Simple bed file containing deletions (coordinates on reference)')
 	parser.add_argument('input_dir', help='directory containing input hic bam, wgs bam, and idxstat files.')
 	default_arguments(parser)

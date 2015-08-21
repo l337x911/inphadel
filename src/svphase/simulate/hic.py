@@ -8,7 +8,7 @@ import re
 
 from svphase.utils import reference
 from svphase.utils.common import logger
-from svphase.utils.config import THREADS, RAND_BUFFER_SIZE, CONTIG_POS_TYPE, ZONE_TYPE, HIND3_STR
+from svphase.utils.config import RAND_BUFFER_SIZE, CONTIG_POS_TYPE, ZONE_TYPE, HIND3_STR
 from svphase.parser import ReadsParserDat, ReadsWriterPredat
 from svphase.chromosome import Chromosome, DelModifier
 
