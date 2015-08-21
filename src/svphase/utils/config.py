@@ -14,7 +14,6 @@ BED_BIN = "/home/anand/software/BEDTools-Version-2.12.0/bin"
 PRECISION=0.000001
 HIND3_STR = 'AAGCTT'
 RANDOM_STATE=0
-TEST_DATA_PREFIX = '/home/anand/Projects/inphadel/abbrev_test'
 SUPPRESS_ARGS = True
 
 FONT = {'family': 'Liberation Sans', 'size': 14}

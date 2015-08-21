@@ -8,12 +8,11 @@ from pkg_resources import Requirement, resource_filename
 
 from svphase.learn.cov import FileStructureData, RPKMAdaptor
 from svphase.learn.features import Features
-#from svphase.utils.config import TEST_DATA_PREFIX
 from svphase.inphadel import Predictor
 import pandas as pd
 
 TEST_DATA_PREFIX=resource_filename(Requirement.parse('InPhaDel'),'abbrev_test')
-MODEL=resource_filename(Requirement.parse('InPhaDel'),'models/sim.del-chr19-20-hm.10-2c.10.RandomForest.pkl')
+MODEL=resource_filename(Requirement.parse('InPhaDel'),'models/rf.2.3.pkl')
 #TEST_DATA_PREFIX='abbrev_test'
 class PredictionTest(unittest.TestCase):
 
@@ -52,6 +51,7 @@ class PredictionTest(unittest.TestCase):
 		#print feats.get_features()
 		#print feats.get_nonzero()
 		#print feats.get_nonzero_features().T
+		predr.set_features(save_prefix=None, preload_prefix=None)
 		preds = predr.predict_log_proba()
 		#preds = predr.predict()
 		preds = preds.sort_index()
@@ -61,10 +61,6 @@ class PredictionTest(unittest.TestCase):
 				self.assertEqual(v, check_same_pred[k], "Predictions %s and %s differ for loci %s"%(v,check_same_pred[k],k))
 		
 		#print preds
-def main():
-	import argparse
-
-		
 	
 if __name__ == "__main__":
 	#import sys;sys.argv = ['', 'Test.testName']
